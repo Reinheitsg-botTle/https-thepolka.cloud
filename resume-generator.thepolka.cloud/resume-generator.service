@@ -1,12 +1,12 @@
 [Unit]
-Description=Resume Generator — thepolka.cloud
+Description=Résumé Generator, https://resume-generator - thepolka.cloud
 After=network.target
 
 [Service]
 Type=simple
-User=www-data
-WorkingDirectory=/opt/resume-generator
-ExecStart=/opt/resume-generator/venv/bin/python app.py
+User=bball_1181
+WorkingDirectory=/home/bball_1181/thepolka.cloud/resume-generator.thepolka.cloud
+sudo sed i '/^ExecStart=/c\ExecStart=/home/bball/thepolka.cloud/resume-generator.thepolka.cloud/.venv/bin/python app.py
 Restart=on-failure
 RestartSec=5
 Environment=PORT=5000

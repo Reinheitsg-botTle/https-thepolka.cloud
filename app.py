@@ -1,36 +1,36 @@
 #Force Flask to perform with the secure headers Cloudflare passes through
-from flask import Flask,
+from flask import Flask, render_template
+
 from werkzeug.middleware.proxy_fix import ProxyFix # <-- Add this import
 
-app = Flask(__name__, template_folder="../shared/templates", static_folder="../static")
+from flask import request
+import os
+
+app = Flask(__name__, template_folder="templates")
 
 # Tells Flask it is running behind an internet tunnel/proxy. Cloudflare tunnel safety headers
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
 # Routes
-
 @app.route("/")
 def home():
     return render_template("home.html")
 
-@app.route('/about')
+@app.route('/answers')
 def about():
     return render_template("about.html")
 
-@app.route('/projects')
+@app.route('/solutions')
 def projects():
     return render_template("projects.html")
 
-@app.route('/contact')
+@app.route('/me')
 def contact():
-    return render_template("contact.html")
+    return render_template("contact.")
 
-@app.route('/résumé-generator')
-def résumé_generator():
-    return render_template("résumé.html")
-
-from flask import request
-import os
+@app.route('/resume')
+def resume_generator():
+    return render_template("resume-generator.html")
 
 @app.route('/upload_logo_dev', methods=['POST'])
 def upload_logo_dev():
@@ -43,6 +43,7 @@ def upload_logo_dev():
     target_path = os.path.expanduser('~/thepolka.cloud/thepolka.cloud/static/images/thepolka.cloud.png')
     file.save(target_path)
     return "File uploaded successfully!", 200
+
 # RUN SERVER
 
 if __name__ == "__main__":

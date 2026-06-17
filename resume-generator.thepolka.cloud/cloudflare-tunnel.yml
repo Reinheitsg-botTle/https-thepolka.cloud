@@ -3,9 +3,9 @@
 # After: cloudflared tunnel create resume-generator
 
 tunnel: resume-generator
-credentials-file: /home/YOUR_USER/.cloudflared/resume-generator.json
+credentials-file: /home/bball_1181/.cloudflared/resume-generator.json
 
 ingress:
   - hostname: resume-generator.thepolka.cloud
     service: http://localhost:5000
-  - service: http_status:404
+    service: http_status:404
