@@ -1,0 +1,367 @@
+{% extends "base.html" %}
+{% block title %}Résumé Generator — The Polkadot Cloud{% endblock %}
+{% block content %}
+<section class="resume-tool" id="resume">
+<style>
+.resume-tool { max-width: 720px; margin: 0 auto; }
+.resume-tool .rg-form { margin-top: 28px; display: flex; flex-direction: column; gap: 16px; }
+
+.rg-section {
+  border: 1px solid #ded6c2;
+  border-radius: 10px;
+  background: #fffdf8;
+  overflow: hidden;
+}
+.rg-section-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+  color: inherit;
+}
+.rg-section-header:focus-visible { outline: 2px solid #3f7068; outline-offset: 2px; }
+.rg-section-title { display: flex; align-items: center; gap: 10px; }
+.rg-chevron { color: #8a8270; transition: transform 0.15s ease; font-size: 0.9rem; }
+.rg-section.collapsed .rg-chevron { transform: rotate(180deg); }
+.rg-section.collapsed .rg-section-body { display: none; }
+.rg-section-body { padding: 4px 18px 18px; display: flex; flex-direction: column; gap: 14px; }
+
+.rg-field { display: flex; flex-direction: column; gap: 6px; font-size: 0.92rem; color: #5b5443; }
+.rg-field input[type="text"],
+.rg-field input[type="email"],
+.rg-field input[type="tel"],
+.rg-field textarea {
+  font: inherit;
+  font-size: 0.95rem;
+  color: #2f2a22;
+  padding: 9px 11px;
+  border: 1px solid #ded6c2;
+  border-radius: 6px;
+  background: #fffefb;
+  resize: vertical;
+}
+.rg-field textarea { min-height: 64px; }
+.rg-field input:focus-visible,
+.rg-field textarea:focus-visible { outline: 2px solid #3f7068; outline-offset: 1px; }
+
+.rg-hint { font-size: 0.88rem; color: #8a8270; margin: 0; }
+
+.rg-entry-list { display: flex; flex-direction: column; gap: 12px; }
+.rg-entry {
+  border: 1px solid #ded6c2;
+  border-radius: 8px;
+  padding: 14px;
+  background: #fbf8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.rg-entry-top { display: flex; align-items: flex-start; gap: 8px; }
+.rg-entry-top input { flex: 1; }
+.rg-remove-entry {
+  border: none;
+  background: none;
+  color: #8a8270;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+.rg-remove-entry:hover { color: #b3493f; background: #f3e9e5; }
+.rg-remove-entry:focus-visible { outline: 2px solid #3f7068; }
+
+.rg-entry-field label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.07em; color: #8a8270; margin-bottom: 5px; text-transform: uppercase; }
+
+.rg-add-entry {
+  align-self: flex-start;
+  border: 1px dashed #ded6c2;
+  background: none;
+  color: #3f7068;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.rg-add-entry:hover { background: #eef4f2; }
+.rg-add-entry:focus-visible { outline: 2px solid #3f7068; outline-offset: 1px; }
+
+.rg-status {
+  min-height: 1.2em;
+  margin: 14px 0 0;
+  font-size: 0.9rem;
+}
+.rg-status[data-state="error"] { color: #b3493f; }
+.rg-status[data-state="ok"] { color: #3f7068; }
+
+#generate-btn { margin-top: 18px; }
+#generate-btn[disabled] { opacity: 0.6; cursor: not-allowed; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rg-chevron { transition: none; }
+}
+</style>
+<p class="subhead">Fill in each section to the best of your ability — every entry uses Action → Result → Impact. One click => all 4 formats download.</p>
+
+<div class="rg-form">
+
+  <div class="rg-section" data-section="basics">
+    <button type="button" class="rg-section-header" aria-expanded="true" aria-controls="rg-body-basics">
+      <span class="rg-section-title">👤 Name &amp; purpose</span>
+      <span class="rg-chevron" aria-hidden="true">⌃</span>
+    </button>
+    <div class="rg-section-body" id="rg-body-basics">
+      <label class="rg-field">Full name
+        <input type="text" id="field-name" placeholder="e.g. Andy Kiecks">
+      </label>
+      <label class="rg-field">Professional title
+        <input type="text" id="field-title" placeholder="e.g. Software Engineer | Backend Systems">
+      </label>
+      <label class="rg-field">Purpose statement (1–2 sentences)
+        <textarea id="field-purpose" placeholder="The purpose of this résumé is to deliver multiple versions in one click. I hope to do this for a salary."></textarea>
+      </label>
+    </div>
+  </div>
+
+  <div class="rg-section" data-section="contact">
+    <button type="button" class="rg-section-header" aria-expanded="true" aria-controls="rg-body-contact">
+      <span class="rg-section-title">Contact &amp; links</span>
+      <span class="rg-chevron" aria-hidden="true">⌃</span>
+    </button>
+    <div class="rg-section-body" id="rg-body-contact">
+      <label class="rg-field">Email
+        <input type="email" id="field-email" placeholder="you@example.com">
+      </label>
+      <label class="rg-field">Phone
+        <input type="tel" id="field-phone" placeholder="+1(954) 632-6721">
+      </label>
+      <label class="rg-field">Links (one per line: label, then URL, see mine for example.)
+        <textarea id="field-links" placeholder="GitHub https://github.com/Reinheitsg-botTle
+LinkedIn https://linkedin.com/company/openai-residency"></textarea>
+      </label>
+    </div>
+  </div>
+
+  <div class="rg-section" data-section="experience">
+    <button type="button" class="rg-section-header" aria-expanded="true" aria-controls="rg-body-experience">
+      <span class="rg-section-title">Experience</span>
+      <span class="rg-chevron" aria-hidden="true">⌃</span>
+    </button>
+    <div class="rg-section-body" id="rg-body-experience">
+      <p class="rg-hint">Each position: => action,=> result,=> impact.</p>
+      <div class="rg-entry-list" id="rg-list-experience"></div>
+      <button type="button" class="rg-add-entry" data-target="experience">+ Add position</button>
+    </div>
+  </div>
+
+  <div class="rg-section" data-section="volunteer">
+    <button type="button" class="rg-section-header" aria-expanded="true" aria-controls="rg-body-volunteer">
+      <span class="rg-section-title">Volunteer</span>
+      <span class="rg-chevron" aria-hidden="true">⌃</span>
+    </button>
+    <div class="rg-section-body" id="rg-body-volunteer">
+      <p class="rg-hint">Each role: what you did, what happened, what it meant.</p>
+      <div class="rg-entry-list" id="rg-list-volunteer"></div>
+      <button type="button" class="rg-add-entry" data-target="volunteer">+ Add role</button>
+    </div>
+  </div>
+
+  <div class="rg-section" data-section="certificates">
+    <button type="button" class="rg-section-header" aria-expanded="true" aria-controls="rg-body-certificates">
+      <span class="rg-section-title">🎓 Certificates</span>
+      <span class="rg-chevron" aria-hidden="true">⌃</span>
+    </button>
+    <div class="rg-section-body" id="rg-body-certificates">
+      <p class="rg-hint">Each credential: what it is, administer of credential, impact.</p>
+      <div class="rg-entry-list" id="rg-list-certificates"></div>
+      <button type="button" class="rg-add-entry" data-target="certificates">+ Add certificate</button>
+    </div>
+  </div>
+
+  <div class="rg-section" data-section="awards">
+    <button type="button" class="rg-section-header" aria-expanded="true" aria-controls="rg-body-awards">
+      <span class="rg-section-title">Awards</span>
+      <span class="rg-chevron" aria-hidden="true">⌃</span>
+    </button>
+    <div class="rg-section-body" id="rg-body-awards">
+      <p class="rg-hint">Each award: what it is, how you earned it, why it mattered.</p>
+      <div class="rg-entry-list" id="rg-list-awards"></div>
+      <button type="button" class="rg-add-entry" data-target="awards">+ Add award</button>
+    </div>
+  </div>
+
+  <div class="rg-section" data-section="hobbies">
+    <button type="button" class="rg-section-header" aria-expanded="true" aria-controls="rg-body-hobbies">
+      <span class="rg-section-title">Hobbies</span>
+      <span class="rg-chevron" aria-hidden="true">⌃</span>
+    </button>
+    <div class="rg-section-body" id="rg-body-hobbies">
+      <label class="rg-field">Hobbies (comma-separated)
+        <input type="text" id="field-hobbies" placeholder="Hiking, Chess, Photography">
+      </label>
+    </div>
+  </div>
+
+</div>
+
+<p class="rg-status" id="rg-status" role="status" aria-live="polite"></p>
+<button type="button" id="generate-btn" class="cta-button">
+    Generate all 4 formats &amp; download
+</button>
+</section>
+{% endblock %}
+{% block extra_js %}
+<script>
+(function () {
+  "use strict";
+
+  var ARI_SECTIONS = {
+    experience:   { placeholder: "Role · Company · Date" },
+    volunteer:    { placeholder: "Role · Organization · Dates" },
+    certificates: { placeholder: "Certificate · Issuer · Date" },
+    awards:       { placeholder: "Award · Issuer · Date" }
+  };
+
+  function buildEntryCard(placeholder) {
+    var card = document.createElement("div");
+    card.className = "rg-entry";
+    card.innerHTML =
+      '<div class="rg-entry-top">' +
+        '<input type="text" class="rg-entry-title" aria-label="' + placeholder + '" placeholder="' + placeholder + '">' +
+        '<button type="button" class="rg-remove-entry" aria-label="Remove entry">×</button>' +
+      '</div>' +
+      '<label class="rg-entry-field"><span>Action</span><textarea class="rg-entry-action" placeholder="What did you do?"></textarea></label>' +
+      '<label class="rg-entry-field"><span>Result</span><textarea class="rg-entry-result" placeholder="What came of it?"></textarea></label>' +
+      '<label class="rg-entry-field"><span>Impact</span><textarea class="rg-entry-impact" placeholder="Numbers, scale, who benefited"></textarea></label>';
+    card.querySelector(".rg-remove-entry").addEventListener("click", function () {
+      card.remove();
+    });
+    return card;
+  }
+
+  Object.keys(ARI_SECTIONS).forEach(function (key) {
+    var list = document.getElementById("rg-list-" + key);
+    list.appendChild(buildEntryCard(ARI_SECTIONS[key].placeholder));
+  });
+
+  document.querySelectorAll(".rg-add-entry").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var key = btn.getAttribute("data-target");
+      var list = document.getElementById("rg-list-" + key);
+      var card = buildEntryCard(ARI_SECTIONS[key].placeholder);
+      list.appendChild(card);
+      card.querySelector(".rg-entry-title").focus();
+    });
+  });
+
+  document.querySelectorAll(".rg-section-header").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var section = btn.closest(".rg-section");
+      var collapsed = section.classList.toggle("collapsed");
+      btn.setAttribute("aria-expanded", String(!collapsed));
+    });
+  });
+
+  function val(id) {
+    var el = document.getElementById(id);
+    return el ? el.value : "";
+  }
+
+  function collectAri(key) {
+    var out = [];
+    document.querySelectorAll("#rg-list-" + key + " .rg-entry").forEach(function (card) {
+      out.push({
+        title:  card.querySelector(".rg-entry-title").value.trim(),
+        action: card.querySelector(".rg-entry-action").value.trim(),
+        result: card.querySelector(".rg-entry-result").value.trim(),
+        impact: card.querySelector(".rg-entry-impact").value.trim()
+      });
+    });
+    return out;
+  }
+
+  function collectPayload() {
+    return {
+      name: val("field-name").trim(),
+      title: val("field-title").trim(),
+      purpose: val("field-purpose").trim(),
+      email: val("field-email").trim(),
+      phone: val("field-phone").trim(),
+      location: val("field-location").trim(),
+      links: val("field-links"),
+      experience: collectAri("experience"),
+      volunteer: collectAri("volunteer"),
+      certificates: collectAri("certificates"),
+      awards: collectAri("awards"),
+      hobbies: val("field-hobbies").split(",").map(function (s) { return s.trim(); }).filter(Boolean)
+    };
+  }
+
+  var statusEl = document.getElementById("rg-status");
+  function setStatus(msg, state) {
+    statusEl.textContent = msg || "";
+    if (state) {
+      statusEl.setAttribute("data-state", state);
+    } else {
+      statusEl.removeAttribute("data-state");
+    }
+  }
+
+  var generateBtn = document.getElementById("generate-btn");
+  generateBtn.addEventListener("click", function () {
+    var payload = collectPayload();
+    if (!payload.name) {
+      setStatus("Please enter your name before generating.", "error");
+      document.getElementById("field-name").focus();
+      return;
+    }
+
+    generateBtn.disabled = true;
+    setStatus("Generating your resume bundle…");
+
+    fetch("/api/resume-generator", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(function (res) {
+        if (!res.ok) {
+          return res.json().catch(function () { return {}; }).then(function (errBody) {
+            throw new Error(errBody.error || "Something went wrong generating your resume.");
+          });
+        }
+        var disposition = res.headers.get("Content-Disposition") || "";
+        var match = disposition.match(/filename="?([^"]+)"?/);
+        var filename = match ? match[1] : "resume_bundle.zip";
+        return res.blob().then(function (blob) { return { blob: blob, filename: filename }; });
+      })
+      .then(function (result) {
+        var url = URL.createObjectURL(result.blob);
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = result.filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        setStatus("Done — your download should start automatically.", "ok");
+      })
+      .catch(function (err) {
+        setStatus(err.message || "Network error — please try again.", "error");
+      })
+      .finally(function () {
+        generateBtn.disabled = false;
+      });
+  });
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}The Polkadot Cloud{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="layout">
+
+        <aside class="sidebar">
+            {% include 'sidebar.html' %}          
+        </aside>
+
+        <div class="content-column">
+            <main class="page-content">
+                {% block content %}{% endblock %}
+            </main>
+
+            <footer class="site-footer">
+                <svg class="rainbow-divider" viewBox="0 0 1000 6" preserveAspectRatio="none" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="rainbow" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="#37c6c0"/>
+                            <stop offset="35%" stop-color="#5fbf6e"/>
+                            <stop offset="65%" stop-color="#f0c84c"/>
+                            <stop offset="100%" stop-color="#e2553f"/>
+                        </linearGradient>
+                    </defs>
+                    <line x1="0" y1="3" x2="1000" y2="3" stroke="url(#rainbow)"
+                          stroke-width="3" stroke-dasharray="14 10"/>
+                </svg>
+
+                <p class="contact-line">
+                    <a href="mailto:info@thepolka.cloud">info@thepolka.cloud</a> |
+                    <a href="mailto:support@thepolka.cloud">support@thepolka.cloud</a> |
+                    <a href="mailto:sales@thepolka.cloud">sales@thepolka.cloud</a>
+                </p>
+                <p class="legal">The Polkadot Cloud&trade; &mdash; Patent pending. Trademark applications filed and in process.</p>
+            </footer>
+        </div>
+
+    </div>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

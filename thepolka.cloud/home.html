@@ -1,136 +1,16 @@
-<!-- communication platform. -->
-<!DOCTYPE html>
-
-<!-- establish language. -->
-<html lang="en">
-
-<!-- ADP® -->
-<head>
-    <!-- Metadata, a tag for the rich get richer.-->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- advertisement subject -->
-    <title>The Polkadot Cloud</title>
-    <!-- end advertisement subject lettering, move on to look.-->
-     
-    <!-- Make our cascading style sheets work the look of what we are. -->
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/site.css') }}">
-    <!-- end metadata collection. -->
-</head>
-
-<!-- andy.kieckhefer@adp.com -->
-<body>
-
-    <aside>
-    <!-- GLOBAL NAVIGATION -->
-        <nav style="display:flex;gap:16px;padding:12px;background:#111;color:white;">
-            <!-- https://thepolka.cloud#home -->
-            <div class="nav-item">
-                <a href="https://thepolka.cloud#home" style="color:white;">Home (0)</a>
-                <div class="nav-preview">
-                    <h3>Home</h3>
-                    <p> Main landing page for the Polkadot Cloud.</p>
-                </div>
-            </div>
-
-            <!--https://resume-generator.thepolka.cloud#resume -->
-            <div class="nav-item">
-                <a href="https://thepolka.cloud#home" style="color:white;">Résumé (1)</a>
-                <div class="nav-preview">
-                    <h3>Résumé</h3>
-                    <p>Résumé generator for a complete set to submit. Don't miss one!</p>
-                </div>
-            </div>
-
-                <a href="/about" style="color:white;">About</a>
-
-                <!-- projects.polka.cloud#projects -->
-                <a href="/projects" style="color:white;">Projects</a>
-
-                <!-- contact.polka.cloud#contact -->
-                <a href="/contact" style="color:white;">Contact</a>
-        
-                <!-- résumé-generator.polka.cloud#résumé -->
-                <div class="nav-item">
-                <a href="/https://contact.thepolka.cloud#contact" style="color:white;">Contact</a>
-                <div class="nav-preview">    
-                    <h3>Business Card</h3>
-                    <p>Contact</p>
-                </div>
-            </div>
-        </nav>
-    </aside>
-    <!-- PAGE CONTENT -->
-    <main style="padding:20px;">
-        <section class="hero-section" id="home">
-
-            <h1>The Polkadot Cloud</h1>
-
-            <p>
-                Welcome to the system dashboard.
-                <a href="https://thepolka.cloud">Launch Homepage</a>
-            </p>
-        </section>
-        <!-- OPTIONAL: direct anchor support -->
-        <section class="resume-generator" id="resume">
-            <h2>Résumé Generator Preview</h2>
-            <p>
-                Access full tool via menu or:
-                <a href="https://resume-generator.thepolka.cloud">Open Résumé Builder</a>
-            </p>
-        </section>
-        <section>
-         
-
-    </main>
-
-    <div class="tracking-banner">
-        <h1>Powered by</h1>
-            <a href="https://gemini.google.com" id="gemini-banner-link" target="_blank" rel="noopener">Google Gemini</a>
-        <span class="counter-badge" id="gemini-count">Referrals: 20</span>
-    </div>
-    
-    <script>
-        // Cross-Subdomain Hash Router Logic
-        const handleRouting = () => {
-            const hash = window.location.hash;
-            if (hash === "#resume" || hash === "#résumé") {
-                document.getElementById("resume")?.scrollIntoView({ behavior: "smooth" });
-            } else if (hash === "#home") {
-                document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
-            }
-        };
-
-        window.addEventListener("load", handleRouting);
-        window.addEventListener("hashchange", handleRouting);
-
-        // Click Tracker Logic
-        document.addEventListener("DOMContentLoaded", () => {
-            const geminiLink = document.getElementById("gemini-banner-link");
-            const geminiCountBadge = document.getElementById("gemini-count");
-            const adpLink = document.getElementById("adp-link");
-            const adpCountBadge = document.getElementById("adp-count");
-
-            let geminiClicks = localStorage.getItem("gemini_referrals") || 0;
-            let adpClicks = localStorage.getItem("adp_redirects") || 0;
-            
-            geminiCountBadge.textContent = `Referrals: ${geminiClicks}`;
-            adpCountBadge.textContent = `Clicks: ${adpClicks}`;
-
-            geminiLink.addEventListener("click", () => {
-                geminiClicks++;
-                localStorage.setItem("gemini_referrals", geminiClicks);
-                geminiCountBadge.textContent = `Referrals: ${geminiClicks}`;
-            });
-
-            adpLink.addEventListener("click", () => {
-                adpClicks++;
-                localStorage.setItem("adp_redirects", adpClicks);
-                adpCountBadge.textContent = `Clicks: ${adpClicks}`;
-            });
-        });
-    </script>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}The Polkadot Cloud{% endblock %}
+{% block content %}
+<section class="hero-section" id="home">
+    <h1>The Polkadot Cloud</h1>
+    <p>
+        Thanks for stopping by! Browse software builds, educational material,
+        cloud-based services, and open-source tools.
+    </p>
+    <p class="flagship">
+        Current flagship project:
+        <a href="/resume">Résumé Generator</a>
+    </p>
+    <img src="{{ url_for('static', filename='img/cloud-logo.png') }}" alt="" class="hero-graphic">
+</section>
+{% endblock %}

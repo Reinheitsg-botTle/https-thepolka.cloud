@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Polkadot Cloud</title>
+
+    <!-- Main site stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="The Polkadot Cloud Logo">
+        </div>
+
+        <nav class="nav-links">
+            <a href="https://thepolka.cloud#welcome">Home</a>
+            <a href="https://resume-generator.thepolka.cloud#resume">Résumé Generator</a>
+            <a href="https://twitter-classic.thepolka.cloud" target="_blank">Twitter Classic</a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- PERMANENT FOOTER -->
+    <footer class="bottom-banner">
+        info@thepolka.cloud | support@thepolka.cloud | sales@thepolka.cloud
+        <div class="legal">
+            <p>The Polkadot Cloud™ — Patent pending. Trademark applications filed and in process.</p>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

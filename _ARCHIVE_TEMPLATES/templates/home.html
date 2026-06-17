@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <main class="content">
+
+        <section class="hero-section">
+
+            <div class="hero-intro">
+               
+                <h1 class="hero-title">The Polkadot Cloud</h1>
+
+                <p class="hero-subtitle">
+                    Thanks for stopping by! Browse software builds, educational material,
+                    cloud-based services and tools.
+                </p>
+
+                <p class="hero-flagship">
+                    Current flagship project: <strong class="project-highlight">Résumé Generator</strong>
+                </p>
+            </div>
+
+            <!-- The Logo and Contact Area (Brought inside the container) -->
+            <div class="hero-main">
+                <img src="{{ url_for('static', filename='images/logo.png') }}"alt="Polkadot Cloud Logo" class="hero-logo">
+            </div>
+    
+        </section>
+
+        <section id="projects">
+            <h2>Projects</h2>
+
+            <div class="project-card">
+                <h3>Résumé Machine</h3>
+                <p>
+                    Standardized resume builder - fill in your experience using
+                    * => Action => Result => Impact format and download all 4 formats
+                    instantly: PDF, Word, Markdown, and print-ready HTML.
+                </p>
+                <a href="https://resume-generator.thepolka.cloud#resume"
+                    class="project-link"
+                    target="_blank">
+                    Generate your resume bundle =>
+                </a>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2>About</h2>
+
+            <p>
+                The Polkadot Cloud is a long-term platform focused on
+                software development, technical education,
+                cloud services, digital products,
+                and accessible learning resources.
+            </p>
+        </section> 
+
+        <section id="resume-generator">
+            <h2>Résumé Generator</h2>
+
+            <p>
+                The Polkadot Cloud's résumé generator creates 4 versions of a resume in 1 click.
+            </p>
+        </section>
+
+
+        <section id="contact">
+            <h2>Contact</h2>
+
+            <p>
+                Virtual business card and professional contact area.
+            </p>
+
+            <div class="tracking-banner">
+                AI Powered <a href="https://openai.com" id="openai-banner-link" target="_blank" rel="noopener">OpenAI</a>
+                <span class="counter-badge" id="openai-count">Referrals: 0</span>
+            </div>
+        </main>
+        
+        <script>
+        // Smooth Scrolling Logic for Hashes
+        const handleRouting = () => {
+            const hash = window.location.hash;
+            if (hash === "#resume" || hash === "#resume") {
+                document.getElementById("resume")?.scrollIntoView({ behavior: "smooth" });
+            } else if (hash === "#home") {
+                document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
+            }
+        };
+
+        window.addEventListener("load", handleRouting);
+        window.addEventListener("hashchange", handleRouting);
+
+        // Persistent Click Counter Storage Analytics
+        document.addEventListener("DOMContentLoaded", () => {
+            const OpenAILink = document.getElementById("openai-banner-link");
+            const OpenAICountBadge = document.getElementById("openai-count");
+            const ADPLink = document.getElementById("adp-link");
+            const ADPCountBadge = document.getElementById("adp-count");
+
+            // Fetch stored click variables
+            let OpenAIClicks = localStorage.getItem("openai_referrals") || 0;
+            let ADPClicks = localStorage.getItem("adp_redirects") || 0;
+            
+            OpenAICountBadge.textContent = `Referrals: ${openaiClicks}`;
+            ADPCountBadge.textContent = `Clicks: ${ADPClicks}`;
+
+            // Handle Clicks
+            OpenAILink.addEventListener("click", () => {
+                OpenAIClicks++;
+                localStorage.setItem("openai_referrals", OpenAIClicks);
+                OpenAICountBadge.textContent = `Referrals: ${OpenAIClicks}`;
+            });
+
+            ADPLink.addEventListener("click", () => {
+                ADPClicks++;
+                localStorage.setItem("adp_redirects", ADPClicks);
+                ADPCountBadge.textContent = `Clicks: ${ADPClicks}`;
+            });
+        });
+    </script>
+    </main>
+
+{% endblock %}
+
