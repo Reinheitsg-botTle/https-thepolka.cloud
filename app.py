@@ -12,6 +12,10 @@ app = Flask(__name__, template_folder="templates")
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
 # Routes
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("404.html"), 404
+
 @app.route("/")
 def home():
     return render_template("home.html")
@@ -22,7 +26,7 @@ def about():
 
 @app.route('/solutions')
 def projects():
-    return render_template("projects.html")
+    return render_template("projects.thepolka.cloud#solutions")
 
 @app.route('/me')
 def contact():
@@ -30,7 +34,7 @@ def contact():
 
 @app.route('/resume')
 def resume_generator():
-    return render_template("resume-generator.html")
+    return render_template("resume-generator.thepolka.cloud")
 
 @app.route('/upload_logo_dev', methods=['POST'])
 def upload_logo_dev():
