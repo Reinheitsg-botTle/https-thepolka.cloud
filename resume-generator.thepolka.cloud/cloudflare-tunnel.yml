@@ -6,6 +6,11 @@ tunnel: resume-generator
 credentials-file: /home/bball_1181/.cloudflared/resume-generator.json
 
 ingress:
+  - hostname: thepolka.cloud
+    service: http://localhost:8001
+
   - hostname: resume-generator.thepolka.cloud
-    service: http://localhost:5000
+    service: http://localhost:8002
+    
+  - hostname: 404 Code
     service: http_status:404

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}The Polka Cloud{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+<div class="app-container">
+
+  <!-- GLOBAL LEFT NAV — permanent on every page -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <a href="https://thepolka.cloud#welcome">ThePolka.Cloud™</a>
+    </div>
+    <nav class="sidebar-nav" aria-label="Global Navigation">
+      <a href="https://thepolka.cloud#welcome"
+         class="nav-link {% if active == 'home' %}active{% endif %}">Home</a>
+      <a href="https://resume-generator.thepolka.cloud#resume"
+         class="nav-link {% if active == 'resume' %}active{% endif %}">Résumé Generator</a>
+      <a href="https://twitter-classic.thepolka.cloud"
+         class="nav-link {% if active == 'twitter' %}active{% endif %}">Twitter Classic</a>
+      <a href="https://projects.thepolka.cloud"
+         class="nav-link {% if active == 'projects' %}active{% endif %}">Projects</a>
+      <a href="https://about.thepolka.cloud"
+         class="nav-link {% if active == 'about' %}active{% endif %}">About</a>
+      <a href="https://contact.thepolka.cloud"
+         class="nav-link {% if active == 'contact' %}active{% endif %}">Contact</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT COLUMN -->
+  <div class="main-column">
+    <main class="page-content">
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- GLOBAL FOOTER — permanent on every page -->
+    <footer class="site-footer">
+      <div class="footer-contact">
+        <a href="mailto:info@thepolka.cloud">info@thepolka.cloud</a>
+        <span class="sep">|</span>
+        <a href="mailto:support@thepolka.cloud">support@thepolka.cloud</a>
+        <span class="sep">|</span>
+        <a href="mailto:sales@thepolka.cloud">sales@thepolka.cloud</a>
+      </div>
+      <div class="footer-legal">
+        ThePolka.Cloud™ &mdash; Patent pending. Trademark applications filed and in process.
+        Copyright &copy;2019–2026. All rights reserved.
+      </div>
+    </footer>
+  </div>
+
+</div>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

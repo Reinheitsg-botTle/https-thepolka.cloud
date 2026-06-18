@@ -1,0 +1,15 @@
+# ~/.cloudflared/config.yml
+# Single tunnel serving both hostnames.
+# Run: cloudflared tunnel run thepolka-cloud
+
+tunnel: thepolka-cloud
+credentials-file: /home/bball_1181/.cloudflared/thepolka-cloud.json
+
+ingress:
+  - hostname: resume-generator.thepolka.cloud
+    service: http://localhost:8002
+  - hostname: thepolka.cloud
+    service: http://localhost:8001
+  - hostname: www.thepolka.cloud
+    service: http://localhost:8001
+  - service: http_status:404

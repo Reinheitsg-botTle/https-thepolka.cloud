@@ -1,0 +1,14 @@
+[Unit]
+Description=thepolka.cloud root Flask app
+After=network.target
+
+[Service]
+Type=simple
+User=bball_1181
+WorkingDirectory=/home/bball_1181/thepolka.cloud
+ExecStart=/home/bball_1181/thepolka.cloud/.venv/bin/python app.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
