@@ -1,7 +1,7 @@
 """
 resume-generator.thepolka.cloud — Flask backend
 Port: 8002
-Run: source .venv/bin/activate && python app.py
+Run: source .venv/bin/activate && python3 app.py
 """
 import io
 import os

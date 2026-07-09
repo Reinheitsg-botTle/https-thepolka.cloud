@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faire — Local AI OS | thepolka.cloud</title>
+<meta name="description" content="Faire: a local-first AI chat assistant from thepolka.cloud">
+<link rel="icon" href="/static/img/faire-icon.svg">
+<link rel="stylesheet" href="/static/css/faire.css">
+</head>
+<body>
+
+  <!-- Page content area: this is where this subdomain's own content goes.
+       Faire (the widget) floats above it and is designed to be dropped
+       into ANY page on thepolka.cloud later, unchanged. -->
+  <main class="faire-page">
+    <header class="faire-page__header">
+      <h1>faire<span class="dot">.</span>thepolka<span class="dot">.</span>cloud</h1>
+      <p>Local AI OS — chat with Faire, live, right here.</p>
+    </header>
+
+    <section class="faire-page__hero">
+      <p>This page demonstrates the Faire chat widget running standalone.
+         Click the bubble in the bottom-right corner to start a conversation.</p>
+    </section>
+  </main>
+
+  <!-- ===================== FAIRE WIDGET MOUNT ===================== -->
+  <!-- To embed Faire on ANY other page of thepolka.cloud, copy just this
+       block (the div + the two <script>/<link> includes) into that page. -->
+  <link rel="stylesheet" href="/static/css/faire-widget.css">
+  <div id="faire-widget-root"></div>
+  <script src="/static/js/faire-widget.js" defer></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      Faire.init({
+        mount: '#faire-widget-root',
+        apiBase: '/api',        // change if backend lives elsewhere, e.g. https://faire.thepolka.cloud/api
+        title: 'Faire',
+        subtitle: 'local-ai-os',
+        startOpen: false
+      });
+    });
+  </script>
+  <!-- =============================================================== -->
+
+</body>
+</html>

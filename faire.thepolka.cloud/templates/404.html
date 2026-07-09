@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lost in the fog — Faire</title>
+<link rel="icon" href="/static/img/faire-icon.svg">
+<link rel="stylesheet" href="/static/css/faire.css">
+<style>
+  .faire-404{
+    min-height:80vh; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center;
+  }
+  .faire-404__orb{
+    width:80px; height:80px; border-radius:50%; margin-bottom:24px;
+    background:
+      radial-gradient(circle at 35% 30%, rgba(255,255,255,.95), rgba(255,255,255,0) 40%),
+      radial-gradient(circle at 60% 70%, #f4c6ff, #c79bff 50%, #6ee7c8 100%);
+    box-shadow:0 0 30px 8px rgba(199,155,255,.4);
+  }
+  .faire-404 h1{ font-size:1.8rem; margin:0 0 10px; }
+  .faire-404 p{ color:var(--muted); max-width:420px; }
+  .faire-404 a{ color:var(--accent-2); text-decoration:none; margin-top:18px; display:inline-block; }
+  .faire-404 a:hover{ text-decoration:underline; }
+</style>
+</head>
+<body>
+  <div class="faire-404">
+    <div class="faire-404__orb"></div>
+    <h1>That page is in development.</h1>
+    <p>Faire couldn't find what you were looking for just yet. Maybe it hasn't been built yet.</p>
+    <a href="/">&larr; Back to Faire</a>
+  </div>
+</body>
+</html>

@@ -1,19 +1,23 @@
-{% extends "base.html" %}
-{% block title %}Home | The Polkadot Cloud{% endblock %}
+{% extends "layout.html" %}
+<!-- Webpage tab block label -->
+{% block title %}Andy's | The Polkadot Cloud{% endblock %}
+<!-- Contents of the webpage -->
+<!-- Refers to the upper right quadrant of the screen. -->
 {% block content %}
 
+<!-- Main page content -->
 <section class="hero-section" id="welcome">
 
-    <h1>The Polkadot Cloud</h1>
+    <h1>Welcome to the Polkadot Cloud</h1>
 
     <p>
         Thanks for stopping by. Browse software builds, educational material,
-        cloud-based services, and open-source tools.
+        cloud-based services, and professional tools.
     </p>
 
     <p class="flagship">
         Current flagship project:
-        <a href="https://resume-generator.thepolka.cloud#resume">
+        <a href="https://resume-generator.thepolka.cloud/#resume">
             Résumé Generator
         </a>
     </p>
@@ -21,7 +25,7 @@
     <div class="hero-image">
         <img
             src="{{ url_for('static', filename='img/thepolka.cloud.png') }}"
-            alt="The Polkadot Cloud"
+            alt="ThePolka.Cloud"
             class="hero-graphic"
         />
     </div>

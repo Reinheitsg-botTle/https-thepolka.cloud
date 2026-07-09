@@ -1,0 +1,153 @@
+/* ===== Faire Widget Styles =====
+   Scoped under #faire-widget-root so dropping this onto any
+   thepolka.cloud page won't clash with that page's own CSS. */
+
+#faire-widget-root, #faire-widget-root *{
+  box-sizing:border-box;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+#faire-widget-root{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:999999;
+}
+
+.faire-bubble{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#6ee7b7,#60a5fa);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  box-shadow:0 8px 24px rgba(0,0,0,.35);
+  border:none;
+  transition:transform .15s ease;
+}
+.faire-bubble:hover{ transform:scale(1.06); }
+.faire-bubble svg{ width:26px; height:26px; }
+
+.faire-panel{
+  position:absolute;
+  bottom:76px;
+  right:0;
+  width:360px;
+  max-width:calc(100vw - 40px);
+  height:520px;
+  max-height:calc(100vh - 120px);
+  background:#11141b;
+  border:1px solid #1f2430;
+  border-radius:16px;
+  box-shadow:0 16px 48px rgba(0,0,0,.5);
+  display:none;
+  flex-direction:column;
+  overflow:hidden;
+}
+.faire-panel.faire-open{ display:flex; }
+
+.faire-panel__header{
+  padding:14px 16px;
+  background:#0b0d12;
+  border-bottom:1px solid #1f2430;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.faire-panel__title{
+  color:#e9edf3;
+  font-weight:700;
+  font-size:.95rem;
+  margin:0;
+}
+.faire-panel__subtitle{
+  color:#8c93a3;
+  font-size:.72rem;
+  margin:2px 0 0;
+}
+.faire-panel__close{
+  background:none;
+  border:none;
+  color:#8c93a3;
+  cursor:pointer;
+  font-size:1.1rem;
+  line-height:1;
+  padding:4px;
+}
+.faire-panel__close:hover{ color:#e9edf3; }
+
+.faire-panel__messages{
+  flex:1;
+  overflow-y:auto;
+  padding:14px 16px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.faire-msg{
+  max-width:85%;
+  padding:9px 12px;
+  border-radius:12px;
+  font-size:.88rem;
+  line-height:1.4;
+  white-space:pre-wrap;
+}
+.faire-msg--user{
+  align-self:flex-end;
+  background:#1f3a30;
+  color:#e9edf3;
+  border-bottom-right-radius:4px;
+}
+.faire-msg--bot{
+  align-self:flex-start;
+  background:#1a1e29;
+  color:#e9edf3;
+  border-bottom-left-radius:4px;
+}
+.faire-msg--error{
+  align-self:flex-start;
+  background:#3a1f1f;
+  color:#f3b4b4;
+}
+
+.faire-panel__inputrow{
+  display:flex;
+  gap:8px;
+  padding:12px;
+  border-top:1px solid #1f2430;
+  background:#0b0d12;
+}
+.faire-panel__input{
+  flex:1;
+  background:#11141b;
+  border:1px solid #1f2430;
+  border-radius:10px;
+  color:#e9edf3;
+  padding:9px 12px;
+  font-size:.88rem;
+  resize:none;
+  outline:none;
+}
+.faire-panel__input:focus{ border-color:#60a5fa; }
+
+.faire-panel__send{
+  background:linear-gradient(135deg,#6ee7b7,#60a5fa);
+  border:none;
+  border-radius:10px;
+  width:40px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.faire-panel__send:disabled{ opacity:.5; cursor:default; }
+
+@media (max-width: 480px){
+  .faire-panel{
+    width:calc(100vw - 24px);
+    right:-8px;
+  }
+}

@@ -4,24 +4,26 @@
 
 {% block content %}
 <section class="resume-tool" id="resume">
-  <h1>Generate your résumé bundle</h1>
-  <p class="subhead">Fill in each section — every entry uses Action → Result → Impact. One click downloads all 4 formats (.md, .html, .docx, .pdf).</p>
+
+  <!-- Title -->
+  <h1>Generate your Résumé Bundle</h1>
+
+  <!-- Instructions -->
+  <p class="subhead">Complete each section. Every entry should model an "ACTION → RESULT → IMPACT" narrative.</p>
 
   <div class="rg-form">
-
     <div class="rg-section" data-section="basics">
-      <button type="button" class="rg-section-header" aria-expanded="true" aria-controls="rg-body-basics">
-        <span>👤 Name &amp; Purpose</span><span class="rg-chevron">⌃</span>
-      </button>
-      <div class="rg-section-body" id="rg-body-basics">
-        <label class="rg-field">Full name
+      <div class="rg-section-body" id="rg-basics-body">
+        <label class="rg-field">👤Full name
           <input type="text" id="field-name" placeholder="e.g. Andrew Kieckhefer">
         </label>
+
         <label class="rg-field">Professional title
-          <input type="text" id="field-title" placeholder="e.g. Meteorologist | Computer Engineering | Independent Contractor">
+          <input type="text" id="field-title" placeholder="e.g. Web developer">
         </label>
-        <label class="rg-field">Purpose statement (1–2 sentences)
-          <textarea id="field-purpose" placeholder="Computer enthusiast with experience in Python, Linux, and data processing…"></textarea>
+
+        <label class="rg-field">Purpose Statement (1–2 sentences)
+          <textarea id="field-purpose" placeholder="Computer enthusiast with experience in Python, Linux, and data processing in cloud environments to administer an enterprise"></textarea>
         </label>
       </div>
     </div>
@@ -30,26 +32,31 @@
       <button type="button" class="rg-section-header" aria-expanded="true" aria-controls="rg-body-contact">
         <span>📬 Contact &amp; Links</span><span class="rg-chevron">⌃</span>
       </button>
+
       <div class="rg-section-body" id="rg-body-contact">
         <label class="rg-field">Email
-          <input type="email" id="field-email" placeholder="you@example.com">
+          <input type="email" id="field-email" placeholder="1akieckhefer@gmail.com">
         </label>
+
         <label class="rg-field">Phone
-          <input type="tel" id="field-phone" placeholder="+1 (555) 000-0000">
+          <input type="tel" id="field-phone" placeholder="+1 (414)690-2101; +1(865)244-9678">
         </label>
+
         <label class="rg-field">Location
-          <input type="text" id="field-location" placeholder="City, State">
+          <input type="text" id="field-location" placeholder="Milwaukee, Wisconsin">
         </label>
+
         <label class="rg-field">Links (one per line: Label then URL)
-          <textarea id="field-links" placeholder="GitHub https://github.com/yourhandle&#10;LinkedIn https://linkedin.com/in/you"></textarea>
+          <textarea id="field-links" placeholder="GitHub https://github.com/Reinheitsg-botTle;LinkedIn https://linkedin.com/company/openai-residency"></textarea>
         </label>
       </div>
     </div>
 
     <div class="rg-section" data-section="experience">
       <button type="button" class="rg-section-header" aria-expanded="true" aria-controls="rg-body-experience">
-        <span>💼 Experience</span><span class="rg-chevron">⌃</span>
+        <span>💼 Experience</span><span class="rg-chevron"></span>
       </button>
+
       <div class="rg-section-body" id="rg-body-experience">
         <p class="rg-hint">Each position: Role · Company · Dates</p>
         <div class="rg-entry-list" id="rg-list-experience"></div>
@@ -59,7 +66,7 @@
 
     <div class="rg-section" data-section="volunteer">
       <button type="button" class="rg-section-header" aria-expanded="true" aria-controls="rg-body-volunteer">
-        <span>🤝 Volunteer</span><span class="rg-chevron">⌃</span>
+        <span>🤝 Volunteer</span><span class="rg-chevron"></span>
       </button>
       <div class="rg-section-body" id="rg-body-volunteer">
         <p class="rg-hint">Role · Organization · Dates</p>
@@ -70,7 +77,7 @@
 
     <div class="rg-section" data-section="certificates">
       <button type="button" class="rg-section-header" aria-expanded="true" aria-controls="rg-body-certificates">
-        <span>🎓 Certificates</span><span class="rg-chevron">⌃</span>
+        <span>🎓 Certifications</span><span class="rg-chevron">⌃</span>
       </button>
       <div class="rg-section-body" id="rg-body-certificates">
         <p class="rg-hint">Certificate · Issuer · Date</p>
@@ -81,7 +88,7 @@
 
     <div class="rg-section" data-section="awards">
       <button type="button" class="rg-section-header" aria-expanded="true" aria-controls="rg-body-awards">
-        <span>🏆 Awards</span><span class="rg-chevron">⌃</span>
+        <span>🏆 Awards</span><span class="rg-chevron"></span>
       </button>
       <div class="rg-section-body" id="rg-body-awards">
         <p class="rg-hint">Award · Issuer · Date</p>
@@ -92,7 +99,7 @@
 
     <div class="rg-section" data-section="hobbies">
       <button type="button" class="rg-section-header" aria-expanded="true" aria-controls="rg-body-hobbies">
-        <span>⚡ Hobbies</span><span class="rg-chevron">⌃</span>
+        <span>⚡ Hobbies</span><span class="rg-chevron"></span>
       </button>
       <div class="rg-section-body" id="rg-body-hobbies">
         <label class="rg-field">Hobbies (comma-separated)

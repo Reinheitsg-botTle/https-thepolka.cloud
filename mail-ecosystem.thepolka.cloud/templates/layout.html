@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- thepolka.cloud global template. -->
+  <!-- +++++++++++++++++++++++++++++++ -->
+  <title>{% block title %}The Polkadot Cloud Layout{% endblock %}</title>
+  <!-- Display our favicon of our brand on the title tab of the webpage -->
+  <link rel="icon" type="image/png"
+      href="{{ url_for('static', filename='img/thepolka.cloud.png') }}">
+
+  <!-- Reference cascading style sheets -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+  {% block extra_css %}{% endblock %}
+
+<!-- End heading of webpage -->
+</head>
+
+<!-- Here lies the meat and potatoes. We are in our global navigation toolbar and footer -->
+<!-- Constant contents. Pages get wrapped and baked into this layout template. -->
+<body>
+<div class="app-container">
+
+  <!-- GLOBAL LEFT NAV — permanent on every page -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <a href="https://thepolka.cloud#welcome">ThePolka.Cloud™</a>
+    </div>
+
+    <!-- Carousel ticker for langauges am fluent => beginner in -->
+    <div class="hero-ticker" aria-label="Greeting ticker">
+      <div class="ticker-track">
+        <span class="ticker-item" lang="en">Hello</span>
+        <span class="ticker-item" lang="es">Holá</span>
+        <span class="ticker-item" lang="ar" dir="rtl">مرحباً</span>
+        <span class="ticker-item" lang="zh">你好</span>
+        <span class="ticker-item" lang="fr">Bonjour</span>
+        <!-- duplicate the set once for a seamless loop -->
+        <span class="ticker-item" lang="en">Hello</span>
+        <span class="ticker-item" lang="es">Holá</span>
+        <span class="ticker-item" lang="ar" dir="rtl">مرحباً</span>
+        <span class="ticker-item" lang="zh">你好</span>
+        <span class="ticker-item" lang="fr">Bonjour</span>
+      </div>
+    </div>
+
+    <!-- Navigation menu for access to the various webpages -->
+    <nav class="sidebar-nav" aria-label="Global Navigation">
+      <a href="https://mail-eco\system.thepolka.cloud/#mymail"
+         class="nav-link {% if active == 'home' %}active{% endif %}">Mail</a>
+      <a href="https://thepolka.cloud/#welcome"
+         class="nav-link {% if active == 'home' %}active{% endif %}">Home</a>
+      <a href="https://resume-generator.thepolka.cloud/#resume"
+         class="nav-link {% if active == 'resume' %}active{% endif %}">Résumé Generator</a>
+      <a href="https://faire.thepolka.cloud/#ai"
+         class="nav-link {% if active == 'FaireOS' %}active{% endif %}">Local-OS-FAIRE</a>
+      <a href="https://CAD.thepolka.cloud/#ack"
+         class="nav-link {% if active == 'CAD' %}active{% endif %}">CAD Experience</a>
+      <a href="https://store.thepolka.cloud/#support"
+         class="nav-link {% if active == 'store' %}active{% endif %}">Boutique</a>
+
+
+    <!-- End of main-menu navigation links-->
+    </nav>
+
+    <div>
+      <img src="{{ url_for('static', filename='img/thepolka.cloud.png') }}">
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT COLUMN -->
+  <div class="main-column">
+    <main class="page-content">
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- GLOBAL FOOTER — permanent on every page $250,000.00 -->
+    <footer class="site-footer">
+
+      <!-- Offering main @ contacts to divide powers of company -->
+      <div class="footer-contact">
+        <a href="mailto:info@thepolka.cloud">info@thepolka.cloud</a>
+        <span class="sep">|</span>
+        <a href="mailto:support@thepolka.cloud">support@thepolka.cloud</a>
+        <span class="sep">|</span>
+        <a href="mailto:sales@thepolka.cloud">sales@thepolka.cloud</a>
+      </div>
+
+      <!-- Legal notice. "It's the law!" -->
+      <div class="footer-legal">
+        ThePolka.Cloud™ &mdash; Patent pending. Trademark applications filed and in process.
+        Copyright &copy;2019–2026. All rights reserved.
+      </div>
+
+    <!-- End footer section -->
+    </footer>
+  </div>
+
+</div>
+
+<!-- Read in JavaScript -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>
+

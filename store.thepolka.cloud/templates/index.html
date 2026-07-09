@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>Cloud Engineering Support</h2>
+
+<p>
+Professional AWS, Linux, AI and Cloudflare advising and deploying.
+</p>
+
+<div class="services">
+
+{% for service in services %}
+
+<div class="card">
+
+<h3>{{ service.name }}</h3>
+
+<p>{{ service.description }}</p>
+
+<h2>{{ service.value }}</h2>
+
+<a
+class="button"
+href="https://www.paypal.com/paypalme/AIDATAPROCESSING"
+target="_blank">
+
+Purchase
+
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}
