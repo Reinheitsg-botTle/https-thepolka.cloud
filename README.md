@@ -1,5 +1,9 @@
 # ThePolka.Cloud
 
+Building: _Desktop is running the dev server, and Cloudflare tunnel is relaying thepolka.cloud traffic to the WSL2 machine._
+
+Production: _AWS_
+
 ## Architecture
 
 | App | Directory | Port |
