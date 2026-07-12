@@ -1,0 +1,11 @@
+[Unit]
+Description=x.thepolka.cloud login portal
+After=network.target
+
+[Service]
+WorkingDirectory=%h/thepolka.cloud/x.thepolka.cloud
+ExecStart=%h/thepolka.cloud/x.thepolka.cloud/venv/bin/gunicorn -w 2 -b 127.0.0.1:8006 app:app
+Restart=always
+
+[Install]
+WantedBy=default.target

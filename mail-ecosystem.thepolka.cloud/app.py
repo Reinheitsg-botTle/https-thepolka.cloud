@@ -44,17 +44,19 @@ def now_iso():
 
 
 SEED_CONTACTS = [
-    ("alex@x",                  "Alex",     "Active"),
-    ("andy@adp",                "Andy",     "Active"),
+    ("andy@alight",              "Andy",     "Active"),
+    ("alex@ x",                  "Alex",     "Active"),
     ("ericka@northwesternmutual","Ericka",   "Active"),
-    ("michelle@amazon",         "Michelle", "Active"),
-    ("robert@ibm",              "Robert",   "Active"),
-    ("sarah@lyft",              "Sarah",    "Active"),
-    ("sevi@bankofamerica",      "Sevi",     "Active"),
-    ("jordan@salesforce",       "Jordan",   "Active"),
-    ("priya@netflix",           "Priya",    "Active"),
-    ("marcus@intuit",           "Marcus",   "Active"),
-    ("lena@stripe",             "Lena",     "Active"),
+    ("michelle@amazon",          "Michelle", "Active"),
+    ("robert@ibm",               "Robert",   "Active"),
+    ("katie@lyft",               "Katie",    "Active"),
+    ("sevi@bankofamerica",       "Sevi",     "Active"),
+    ("jordan@salesforce",        "Jordan",   "Active"),
+    ("pia@netflix",              "Pia",      "Active"),
+    ("marcus@intuit",            "Marcus",   "Active"),
+    ("lena@stripe",              "Lena",     "Active"),
+    ("Amy@adp",                  "Amy",      "Active"),
+    ("david@gruberlawoffices",   "David",    "Active")
 ]
 
 
@@ -220,5 +222,5 @@ def mark_read(message_id):
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8006))
+    port = int(os.environ.get("PORT", 8009))
     app.run(host="0.0.0.0", port=port, debug=False, use_reloader=False)

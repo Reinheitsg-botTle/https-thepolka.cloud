@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+
+
+<h2>Received</h2>
+
+
+{% for m in messages %}
+
+
+<div class="mail">
+
+<b>
+From:
+</b>
+{{m.sender}}
+
+<br>
+
+<b>
+Subject:
+</b>
+
+{{m.subject}}
+
+<p>
+{{m.body}}
+</p>
+
+</div>
+
+
+{% else %}
+
+<p>
+No messages.
+</p>
+
+
+{% endfor %}
+
+
+{% endblock %}

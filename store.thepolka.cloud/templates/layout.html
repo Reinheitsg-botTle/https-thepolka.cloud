@@ -1,28 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Webpage tab block label -->
+{% block title %}Andy's | The Polkadot Cloud{% endblock %}
+<!-- Contents of the webpage -->
+<!-- Refers to the upper right quadrant of the screen. -->
 
-  <!-- thepolka.cloud global template. -->
-  <!-- +++++++++++++++++++++++++++++++ -->
-  <title>{% block title %}The Polkadot Cloud Layout{% endblock %}</title>
-  <!-- Display our favicon of our brand on the title tab of the webpage -->
-  <link rel="icon" type="image/png"
-      href="{{ url_for('static', filename='img/thepolka.cloud.png') }}">
+<!-- Main page content -->
+<section class="hero-section" id="welcome">
 
-  <!-- Reference cascading style sheets -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
-  {% block extra_css %}{% endblock %}
+    <h1>Welcome to the Polkadot Cloud</h1>
 
-<!-- End heading of webpage -->
-</head>
+    <p>
+        Thanks for stopping by. Browse software builds, educational material,
+        cloud-based services, and professional tools.
+    </p>
 
-<!-- Here lies the meat and potatoes. We are in our global navigation toolbar and footer -->
-<!-- Constant contents. Pages get wrapped and baked into this layout template. -->
+    <p class="flagship">
+        Current flagship project:
+        <a href="https://resume-generator.thepolka.cloud/#resume">
+            Résumé Generator
+        </a>
+    </p>
+
+    <div class="hero-image">
+        <img
+            src="{{ url_for('static', filename='img/thepolka.cloud.png') }}"
+            alt="ThePolka.Cloud"
+            class="hero-graphic"
+        />
+    </div>
+</section>
+
 <body>
-<div class="app-container">
-
+<div>
   <!-- GLOBAL LEFT NAV — permanent on every page -->
   <aside class="sidebar">
     <div class="sidebar-brand">
@@ -48,6 +56,8 @@
 
     <!-- Navigation menu for access to the various webpages -->
     <nav class="sidebar-nav" aria-label="Global Navigation">
+      <a href="https://mail-ecosystem.thepolka.cloud/#mymail"
+         class="nav-link {% if active == 'home' %}active{% endif %}">Mail</a>
       <a href="https://thepolka.cloud/#welcome"
          class="nav-link {% if active == 'home' %}active{% endif %}">Home</a>
       <a href="https://resume-generator.thepolka.cloud/#resume"

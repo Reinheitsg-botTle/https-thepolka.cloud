@@ -6,7 +6,7 @@
 
   <!-- thepolka.cloud global template. -->
   <!-- +++++++++++++++++++++++++++++++ -->
-  <title>{% block title %}The Polkadot Cloud Layout{% endblock %}</title>
+  <title>The Polkadot Cloud Layout</title>
   <!-- Display our favicon of our brand on the title tab of the webpage -->
   <link rel="icon" type="image/png"
       href="{{ url_for('static', filename='img/thepolka.cloud.png') }}">
@@ -48,17 +48,20 @@
 
     <!-- Navigation menu for access to the various webpages -->
     <nav class="sidebar-nav" aria-label="Global Navigation">
-      <a href="https://thepolka.cloud#welcome"
+      <a href="https://mail-eco\system.thepolka.cloud/#mymail"
+         class="nav-link {% if active == 'home' %}active{% endif %}">Mail</a>
+      <a href="https://thepolka.cloud/#welcome"
          class="nav-link {% if active == 'home' %}active{% endif %}">Home</a>
-      <a href="https://resume-generator.thepolka.cloud#resume"
+      <a href="https://resume-generator.thepolka.cloud/#resume"
          class="nav-link {% if active == 'resume' %}active{% endif %}">Résumé Generator</a>
-      <a href="https://faire.thepolka.cloud#ai"
-         class="nav-link {% if active == 'faire' %}active{% endif %}">Local-OS-FAIRE</a>
-      <a href="https://CAD.thepolka.cloud#/ack"
-         class="nav-link {% if active == 'CAD experience' %}active{% endif %}">CAD Experience</a>
+      <a href="https://faire.thepolka.cloud/#ai"
+         class="nav-link {% if active == 'FaireOS' %}active{% endif %}">Local-OS-FAIRE</a>
+      <a href="https://CAD.thepolka.cloud/#ack"
+         class="nav-link {% if active == 'CAD' %}active{% endif %}">CAD Experience</a>
+      <a href="https://directory.thepolka.cloud/#filing"
+         class="nav-link {% if active == 'directory' %}active{% endif %}">Navigate</a>
       <a href="https://store.thepolka.cloud/#support"
-         class="nav-link {% if active =='store' %}active{% endif %}">Boutique</a>
-
+         class="nav-link {% if active == 'store' %}active{% endif %}">Boutique</a>
     <!-- End of main-menu navigation links-->
     </nav>
 
@@ -94,14 +97,29 @@
     <!-- End footer section -->
     </footer>
   </div>
-
 </div>
 
 <!-- Read in JavaScript -->
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-{% block extra_js %}{% endblock %}
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

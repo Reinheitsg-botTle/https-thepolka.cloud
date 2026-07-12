@@ -1,0 +1,67 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #0d0d0f;
+  color: #e8e8e8;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card {
+  background: #17171a;
+  border: 1px solid #2a2a2e;
+  border-radius: 12px;
+  padding: 40px;
+  width: 320px;
+}
+h1 {
+  font-size: 22px;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+h1 span { color: #888; font-weight: 400; }
+label {
+  display: block;
+  font-size: 13px;
+  color: #aaa;
+  margin: 14px 0 6px;
+}
+input {
+  width: 100%;
+  padding: 10px 12px;
+  background: #0d0d0f;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+}
+input:focus { outline: none; border-color: #6ea8fe; }
+button {
+  width: 100%;
+  margin-top: 22px;
+  padding: 10px;
+  background: #6ea8fe;
+  color: #0d0d0f;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+button:hover { background: #8fbaff; }
+.error {
+  background: #3a1414;
+  color: #ff8a8a;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+.welcome { margin: 10px 0 20px; color: #ccc; }
+.logout {
+  display: inline-block;
+  color: #6ea8fe;
+  text-decoration: none;
+  font-size: 14px;
+}

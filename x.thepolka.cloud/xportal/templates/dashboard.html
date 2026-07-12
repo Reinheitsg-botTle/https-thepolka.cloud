@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>x.thepolka.cloud — Dashboard</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="card">
+    <h1>x<span>.thepolka.cloud</span></h1>
+    <p class="welcome">Signed in as <strong>{{ user }}</strong></p>
+    <a class="logout" href="{{ url_for('logout') }}">Log out</a>
+  </div>
+</body>
+</html>

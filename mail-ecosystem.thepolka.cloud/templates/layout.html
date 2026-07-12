@@ -6,7 +6,7 @@
 
   <!-- thepolka.cloud global template. -->
   <!-- +++++++++++++++++++++++++++++++ -->
-  <title>{% block title %}The Polkadot Cloud Layout{% endblock %}</title>
+  <title>{% block title %}The Polkadot Cloud Email Ecosystem{% endblock %}</title>
   <!-- Display our favicon of our brand on the title tab of the webpage -->
   <link rel="icon" type="image/png"
       href="{{ url_for('static', filename='img/thepolka.cloud.png') }}">
@@ -48,18 +48,18 @@
 
     <!-- Navigation menu for access to the various webpages -->
     <nav class="sidebar-nav" aria-label="Global Navigation">
-      <a href="https://mail-eco\system.thepolka.cloud/#mymail"
-         class="nav-link {% if active == 'home' %}active{% endif %}">Mail</a>
-      <a href="https://thepolka.cloud/#welcome"
-         class="nav-link {% if active == 'home' %}active{% endif %}">Home</a>
-      <a href="https://resume-generator.thepolka.cloud/#resume"
-         class="nav-link {% if active == 'resume' %}active{% endif %}">Résumé Generator</a>
-      <a href="https://faire.thepolka.cloud/#ai"
-         class="nav-link {% if active == 'FaireOS' %}active{% endif %}">Local-OS-FAIRE</a>
-      <a href="https://CAD.thepolka.cloud/#ack"
-         class="nav-link {% if active == 'CAD' %}active{% endif %}">CAD Experience</a>
-      <a href="https://store.thepolka.cloud/#support"
-         class="nav-link {% if active == 'store' %}active{% endif %}">Boutique</a>
+      <a href="https://mail-ecosystem.thepolka.cloud/#mymail">Mail</a>
+         class="nav-link {% if active == 'home' %}active{% endif %}"
+      <a href="https://thepolka.cloud/#welcome">Home</a>
+         class="nav-link {% if active == 'home' %}active{% endif %}"
+      <a href="https://resume-generator.thepolka.cloud/#resume">Résumé Generator</a>
+         class="nav-link {% if active == 'resume' %}active{% endif %}"
+      <a href="https://faire.thepolka.cloud/#ai">FAIRE OS</a>
+         class="nav-link {% if active == 'FaireOS' %}active{% endif %}"
+      <a href="https://CAD.thepolka.cloud/#ack">CAD</a>
+         class="nav-link {% if active == 'CAD' %}active{% endif %}"
+      <a href="https://store.thepolka.cloud/#support">Boutique>
+         class="nav-link {% if active == 'store' %}active{% endif %}"
 
 
     <!-- End of main-menu navigation links-->

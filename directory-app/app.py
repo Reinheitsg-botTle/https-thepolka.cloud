@@ -23,7 +23,11 @@ DB_PATH = os.path.join(BASE_DIR, "directory.db")
 # before this touches anything resembling real employee data.
 ADMIN_TOKEN = os.environ.get("DIRECTORY_ADMIN_TOKEN", "change-me-please")
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder=os.path.join(BASE_DIR, "..", "static"),
+    static_url_path="/static"
+)
 
 # Match the shared-layout pattern used across the other thepolka.cloud apps
 app.jinja_loader = ChoiceLoader([

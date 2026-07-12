@@ -1,0 +1,236 @@
+{% extends "layout.html" %}
+{% block title %}The Digital Economy Map — AI Residency — thepolka.cloud{% endblock %}
+
+{% block content %}
+<section class="map-panel">
+  <div class="map-header">
+    <div class="map-title">
+      <h1>The Polkadot Cloud's Information Hub.</h1>
+      <p class="subtitle">Two different measures, kept honestly separate — company market cap and country GDP aren't the same unit and shouldn't share one bubble.</p>
+    </div>
+
+    <div class="map-controls">
+      <div class="view-toggle" role="tablist" aria-label="Choose data view">
+        <button class="toggle-btn active" data-view="companies" role="tab" aria-selected="true">Company · Market Cap</button>
+        <button class="toggle-btn" data-view="countries" role="tab" aria-selected="false">Country · GDP</button>
+      </div>
+      <div class="legend" id="legend"></div>
+    </div>
+  </div>
+
+  <div class="map-canvas-wrap">
+    <div class="map-canvas" id="map-canvas" aria-live="polite"></div>
+    <div class="map-hint">Hover a node for detail · Click to pin</div>
+  </div>
+
+  <div class="snapshot-card" id="snapshot-card">
+    <h3>Snapshot</h3>
+    <div id="snapshot-body"></div>
+    <p class="snapshot-note" id="snapshot-note"></p>
+  </div>
+</section>
+
+<section class="community-row">
+  <div class="community-card">
+    <h2>AI Residency Community</h2>
+    <div class="composer">
+      <div class="avatar" aria-hidden="true">🧑</div>
+      <input type="text" placeholder="Share your thoughts on global tech, AI, and the future…" id="composer-input">
+      <button class="btn-post" id="post-btn">Post</button>
+    </div>
+    <div class="post-list" id="post-list">
+      <!-- seeded demo posts, replace with real data source before launch -->
+      <div class="post">
+        <div class="avatar" aria-hidden="true">👤</div>
+        <div class="post-body">
+          <div class="post-meta"><strong>Andrew K.</strong><span>5 minutes ago</span></div>
+          <p>Nvidia and TSMC show how concentrated the AI supply chain really is right now.</p>
+          <div class="post-actions"><a href="#">Reply</a><span>👍 12</span></div>
+        </div>
+      </div>
+      <div class="post">
+        <div class="avatar" aria-hidden="true">👤</div>
+        <div class="post-body">
+          <div class="post-meta"><strong>DataExplorer</strong><span>15 minutes ago</span></div>
+          <p>Good to finally see GDP and market cap split apart — they get conflated everywhere.</p>
+          <div class="post-actions"><a href="#">Reply</a><span>👍 8</span></div>
+        </div>
+      </div>
+      <div class="post">
+        <div class="avatar" aria-hidden="true">👤</div>
+        <div class="post-body">
+          <div class="post-meta"><strong>CloudNomad</strong><span>1 hour ago</span></div>
+          <p>Would love a historical slider to see how the top 10 has shuffled over the last decade.</p>
+          <div class="post-actions"><a href="#">Reply</a><span>👍 15</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subscribe-card">
+    <h2>Subscribe for Updates</h2>
+    <p>Get occasional notes on AI, tech, and the global economy.</p>
+    <input type="email" id="subscribe-email" placeholder="Enter your email address">
+    <button class="btn-subscribe-wide" id="subscribe-btn">Subscribe</button>
+    <p class="subscribe-note">Demo form — wire to your mailing list provider before launch.</p>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+/* ---------------------------------------------------------------
+   DATA — approximate, rounded figures. These move constantly.
+   Reviewed: July 2026. Verify current numbers before publishing.
+   Companies = market capitalization (public) or last known private
+   valuation (marked ~). Countries = nominal GDP (IMF-style estimate).
+   These two figures are DIFFERENT UNITS and are shown as separate
+   views on purpose — never summed or compared directly.
+------------------------------------------------------------------*/
+const DATA = {
+  companies: {
+    unit: "Market cap (USD)",
+    asOf: "Approximate, July 2026",
+    legend: [
+      {cat:"cloud",label:"Cloud / Infra",color:"#4C8DFF"},
+      {cat:"ai",label:"AI / Semis",color:"#FF6B4A"},
+      {cat:"media",label:"Media / Social",color:"#C77DFF"},
+      {cat:"mfg",label:"Manufacturing",color:"#F4C542"},
+      {cat:"energy",label:"Energy",color:"#3ED598"},
+    ],
+    nodes: [
+      {name:"NVIDIA",       value:3.4, unit:"T", cat:"ai",     x:56, y:30, note:"AI accelerators / GPUs"},
+      {name:"Apple",        value:3.3, unit:"T", cat:"cloud",  x:16, y:22, note:"Consumer devices, services"},
+      {name:"Microsoft",    value:3.2, unit:"T", cat:"cloud",  x:34, y:16, note:"Cloud, enterprise software"},
+      {name:"Alphabet",     value:2.3, unit:"T", cat:"ai",     x:66, y:16, note:"Search, cloud, AI research"},
+      {name:"Amazon",       value:2.1, unit:"T", cat:"cloud",  x:14, y:46, note:"Cloud infra + e-commerce"},
+      {name:"Saudi Aramco", value:1.8, unit:"T", cat:"energy", x:46, y:54, note:"State oil & gas producer"},
+      {name:"Meta",         value:1.6, unit:"T", cat:"media",  x:36, y:66, note:"Social platforms, VR/AR"},
+      {name:"Broadcom",     value:1.0, unit:"T", cat:"ai",     x:78, y:36, note:"Networking chips, software"},
+      {name:"TSMC",         value:1.0, unit:"T", cat:"mfg",    x:86, y:58, note:"Advanced chip fabrication"},
+      {name:"Tencent",      value:0.5, unit:"T", cat:"media",  x:70, y:70, note:"Gaming, messaging (China)"},
+      {name:"Samsung",      value:0.35,unit:"T", cat:"mfg",    x:60, y:82, note:"Electronics, memory chips"},
+      {name:"ByteDance",    value:0.3, unit:"T", cat:"media",  x:24, y:80, note:"~ Private valuation estimate"},
+      {name:"Toyota",       value:0.23,unit:"T", cat:"mfg",    x:8,  y:70, note:"Automotive manufacturing"},
+      {name:"IBM",          value:0.25,unit:"T", cat:"cloud",  x:90, y:20, note:"Enterprise IT, consulting"},
+    ]
+  },
+  countries: {
+    unit: "Nominal GDP (USD)",
+    asOf: "Approximate, IMF-style estimate — verify before publishing",
+    legend: [
+      {cat:"region",label:"Country / Region",color:"#4C8DFF"},
+    ],
+    nodes: [
+      {name:"United States",  value:29,  unit:"T", cat:"region", x:16, y:26, note:"Largest single economy"},
+      {name:"China",          value:19,  unit:"T", cat:"region", x:70, y:22, note:"Second-largest economy"},
+      {name:"Germany",        value:4.7, unit:"T", cat:"region", x:42, y:14, note:"Largest EU economy"},
+      {name:"India",          value:4.3, unit:"T", cat:"region", x:64, y:46, note:"Fastest-growing major economy"},
+      {name:"Japan",          value:4.1, unit:"T", cat:"region", x:88, y:20, note:"Manufacturing & export hub"},
+      {name:"United Kingdom", value:3.6, unit:"T", cat:"region", x:30, y:8,  note:"Finance-led economy"},
+      {name:"France",         value:3.2, unit:"T", cat:"region", x:38, y:24, note:"Diversified industrial base"},
+      {name:"Brazil",         value:2.2, unit:"T", cat:"region", x:20, y:62, note:"Largest South American economy"},
+      {name:"South Korea",    value:1.9, unit:"T", cat:"region", x:82, y:38, note:"Electronics & shipbuilding"},
+      {name:"Australia",      value:1.8, unit:"T", cat:"region", x:80, y:76, note:"Resources & mining exports"},
+      {name:"Singapore",      value:0.55,unit:"T", cat:"region", x:60, y:66, note:"Trade & finance hub"},
+      {name:"Nigeria",        value:0.5, unit:"T", cat:"region", x:44, y:58, note:"Largest African economy by GDP"},
+    ]
+  }
+};
+
+let currentView = "companies";
+const canvas = document.getElementById("map-canvas");
+const legendEl = document.getElementById("legend");
+const snapshotBody = document.getElementById("snapshot-body");
+const snapshotNote = document.getElementById("snapshot-note");
+
+function sizeFor(value, values) {
+  const min = Math.min(...values), max = Math.max(...values);
+  const norm = (Math.sqrt(value) - Math.sqrt(min)) / (Math.sqrt(max) - Math.sqrt(min) || 1);
+  return 56 + norm * 96; // px diameter range
+}
+
+function render(view) {
+  currentView = view;
+  const set = DATA[view];
+  const values = set.nodes.map(n => n.value);
+  canvas.innerHTML = "";
+
+  legendEl.innerHTML = set.legend.map(l =>
+    `<span class="legend-item"><i style="background:${l.color}"></i>${l.label}</span>`
+  ).join("");
+
+  set.nodes.forEach(n => {
+    const color = set.legend.find(l => l.cat === n.cat)?.color || "#4C8DFF";
+    const size = sizeFor(n.value, values);
+    const el = document.createElement("div");
+    el.className = "node" + (view === "countries" ? " node-region" : "");
+    el.style.left = n.x + "%";
+    el.style.top = n.y + "%";
+    el.style.width = size + "px";
+    el.style.height = size + "px";
+    el.style.setProperty("--node-color", color);
+    el.innerHTML = `<span class="node-name">${n.name}</span><span class="node-value">$${n.value}${n.unit}</span>`;
+    el.addEventListener("mouseenter", () => showSnapshot(n, set));
+    el.addEventListener("click", () => showSnapshot(n, set, true));
+    canvas.appendChild(el);
+  });
+
+  showSnapshot(null, set);
+}
+
+function showSnapshot(node, set, pinned) {
+  if (!node) {
+    snapshotBody.innerHTML = `<p class="snapshot-hint">Hover or click any node to see detail here.</p>`;
+  } else {
+    snapshotBody.innerHTML = `
+      <div class="snapshot-row"><strong>${node.name}</strong></div>
+      <div class="snapshot-row snapshot-value">$${node.value}${node.unit}</div>
+      <div class="snapshot-row snapshot-desc">${node.note}</div>
+      ${pinned ? '<div class="snapshot-row snapshot-pinned">Pinned</div>' : ""}
+    `;
+  }
+  snapshotNote.textContent = `${set.unit} · ${set.asOf}`;
+}
+
+document.querySelectorAll(".toggle-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".toggle-btn").forEach(b => {
+      b.classList.remove("active");
+      b.setAttribute("aria-selected", "false");
+    });
+    btn.classList.add("active");
+    btn.setAttribute("aria-selected", "true");
+    render(btn.dataset.view);
+  });
+});
+
+// Demo-only community composer — replace with a real POST to your backend.
+document.getElementById("post-btn").addEventListener("click", () => {
+  const input = document.getElementById("composer-input");
+  const text = input.value.trim();
+  if (!text) return;
+  const list = document.getElementById("post-list");
+  const post = document.createElement("div");
+  post.className = "post";
+  post.innerHTML = `
+    <div class="avatar" aria-hidden="true">🧑</div>
+    <div class="post-body">
+      <div class="post-meta"><strong>You</strong><span>just now</span></div>
+      <p>${text.replace(/</g,"&lt;")}</p>
+      <div class="post-actions"><a href="#">Reply</a><span>👍 0</span></div>
+    </div>`;
+  list.prepend(post);
+  input.value = "";
+});
+
+document.getElementById("subscribe-btn").addEventListener("click", () => {
+  const input = document.getElementById("subscribe-email");
+  if (!input.value.includes("@")) { input.focus(); return; }
+  input.value = "";
+  input.placeholder = "Thanks — you're subscribed (demo)";
+});
+
+render("companies");
+</script>
+{% endblock %}

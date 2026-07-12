@@ -1,10 +1,12 @@
-{% extends "layout.html" %}
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("404.html"), 404{% extends "layout.html" %}
 {% block title %}Not Found | ThePolka.Cloud{% endblock %}
 
 {% block content %}
 <section class="hero" id="not-found">
   <h1>404 — Page Under Construction</h1>
   <p>Please pardon our dust. We are happy to help you with an order.</p>
-  <p><a href="/">← Make a U-turn</a></p>
+  <p>href="/"← Make a U-turn</p>
 </section>
 {% endblock %}

@@ -6,6 +6,11 @@ Port: 7998
 Run: source .venv/bin/activate && python app.py
 """
 
+# Hold my beer
+SQLALCHEMY_DATABASE_URI = "sqlite:///instance/users.db"
+
+# Objective is to store data in a database to learn and grow my audience
+
 # Room of requirement visit
 from flask import Flask, render_template
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -20,6 +25,11 @@ def not_found(e):
 
     # An error catch all base
     return render_template("404.html"), 404
+
+# Knock knock
+@app.route("/login")
+def login():
+    return render_template("login.html")
 
 # Did you knock?
 @app.route("/")
@@ -45,4 +55,4 @@ def faire():
 # Fire up the engine
 if __name__ == "__main__":
     # Conditions
-    app.run(host="0.0.0.0", port=8001, debug=False, use_reloader=False)
+    app.run(host="0.0.0.0", port=8001, debug=True, use_reloader=True)
