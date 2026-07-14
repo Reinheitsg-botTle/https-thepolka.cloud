@@ -13,6 +13,7 @@
 
   <!-- Reference cascading style sheets -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/global-shell.css') }}">
   {% block extra_css %}{% endblock %}
 
 <!-- End heading of webpage -->
@@ -109,6 +110,7 @@
 
 <!-- Read in JavaScript --> 
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/global-shell.js') }}"></script>
 {% block extra_js %}{% endblock %}
 </body>
 </html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="https://thepolka.cloud/static/css/global-shell.css">
+  <title>Polka Security Agent</title>
+  <style>
+    body{margin:0;font:16px system-ui;background:#fff5fa;color:#2b1721}.wrap{max-width:1050px;margin:auto;padding:32px}h1{font-size:2.4rem;margin:.2rem 0}.sub,.note{color:#725363}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:24px 0}.card,section{background:#fff;border:1px solid #f0cada;border-radius:16px;padding:18px;box-shadow:0 4px 20px #db93b51a}.number{font-size:2rem;font-weight:700}table{border-collapse:collapse;width:100%}th,td{padding:12px;text-align:left;border-bottom:1px solid #f3e3eb}.tag{border-radius:99px;padding:4px 9px;background:#ffe2f0;font-size:.8rem}.complete{background:#d8f3dd}.completed_with_errors{background:#fff0c2}.error{color:#8e1d1d}button,select{font:inherit;padding:10px 14px;border-radius:8px;border:1px solid #a11f66}button{background:#a11f66;color:#fff;cursor:pointer}button:disabled{opacity:.65;cursor:wait}select{margin-right:8px;background:#fff}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="tag">FLAGSHIP AGENT · SECURITY</p>
+    <h1>🛡️ Polka Security Agent</h1>
+    <p class="sub">Authorized security posture monitoring with clear evidence, human review, and accountable remediation guidance.</p>
+    <div class="cards">
+      <div class="card"><b>Authorized targets only</b><p>Only pre-approved domains can be assessed.</p></div>
+      <div class="card"><b>Safe daily monitoring</b><p>TLS, DNS, headers, and public security guidance.</p></div>
+      <div class="card"><b>Human accountability</b><p>Reports support review and decisions; they do not replace them.</p></div>
+    </div>
+    <section>
+      <h2>Run an authorized security check</h2>
+      <p class="note">Choose an approved target. The agent cannot scan addresses outside this list.</p>
+      <form id="scan-form"><label for="target">Approved target</label><br><br><select id="target" required></select><button id="scan-button" type="submit">Run security check</button></form>
+      <p id="scan-status" class="note" aria-live="polite"></p>
+    </section>
+    <section>
+      <h2>Estimated savings</h2><div class="number" id="savings">$0.00</div><p id="savings-copy" class="note">Loading estimate…</p>
+      <p class="note">A transparent estimate based on completed scans and the configuration set by the service owner. It is not realized revenue.</p>
+    </section>
+    <section>
+      <h2>Recent security scans</h2><p id="empty">Loading…</p>
+      <table id="runs" hidden><thead><tr><th>Run</th><th>Target</th><th>When</th><th>Status</th><th>Findings</th></tr></thead><tbody></tbody></table>
+    </section>
+  </main>
+  <script>
+    const esc=s=>String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    const status=document.querySelector('#scan-status'),select=document.querySelector('#target'),button=document.querySelector('#scan-button');
+    async function load(){
+      const [runs,metrics,agent]=await Promise.all([fetch('/api/runs').then(r=>r.json()),fetch('/api/metrics').then(r=>r.json()),fetch('/api/agent').then(r=>r.json())]);
+      select.innerHTML=agent.allowed_targets.map(target=>`<option value="${esc(target)}">${esc(target)}</option>`).join('');button.disabled=!agent.allowed_targets.length;
+      document.querySelector('#savings').textContent=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(metrics.estimated_savings_usd);
+      document.querySelector('#savings-copy').textContent=`${metrics.completed_scans} completed scan(s) × ${metrics.minutes_saved_per_scan} min × $${metrics.hourly_rate_usd}/hour = ${metrics.estimated_hours_saved} estimated hours saved.`;
+      const table=document.querySelector('#runs'),body=table.querySelector('tbody'),empty=document.querySelector('#empty');body.innerHTML='';
+      if(!runs.length){empty.textContent='No scans yet. Choose an approved target above to start the first review.';return}empty.hidden=true;table.hidden=false;
+      for(const run of runs){const count=run.findings.filter(f=>f.severity!=='info').length;body.insertAdjacentHTML('beforeend',`<tr><td>#${run.id}</td><td>${esc(run.target)}</td><td>${new Date(run.started_at).toLocaleString()}</td><td><span class="tag ${esc(run.status)}">${esc(run.status)}</span></td><td>${count}</td></tr>`)}
+    }
+    document.querySelector('#scan-form').addEventListener('submit',async event=>{event.preventDefault();button.disabled=true;status.className='note';status.textContent='Running authorized checks…';try{const response=await fetch('/api/scans',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({target:select.value})});const result=await response.json();if(!response.ok)throw new Error(result.error||'The security check could not start.');status.textContent=`Security check #${result.run_id} completed: ${result.status}.`;await load()}catch(error){status.className='note error';status.textContent=error.message}finally{button.disabled=false}});
+    load().catch(()=>{status.className='note error';status.textContent='Dashboard data is unavailable. Review the server log.'});
+  </script>
+  <script src="https://thepolka.cloud/static/js/global-shell.js"></script>
+</body>
+</html>

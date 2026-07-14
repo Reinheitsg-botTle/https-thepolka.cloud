@@ -14,6 +14,7 @@
 
   <!-- Reference cascading style sheets -->
   <link rel="stylesheet" href="{{ url_for('static', filename='/css/site.css') }}">
+  <link rel="stylesheet" href="https://thepolka.cloud/static/css/global-shell.css">
   {% block extra_css %}{% endblock %}
 
 <!-- End heading of webpage -->
@@ -103,8 +104,8 @@
 
 <!-- Read in JavaScript -->
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script src="https://thepolka.cloud/static/js/global-shell.js"></script>
 {% block extra_js %}{% endblock %}
 </body>
 </html>
-
 
