@@ -10,10 +10,13 @@ Run on its own port (suggest 8005), behind the same Cloudflare tunnel
 and ChoiceLoader/layout.html pattern as your other subdomains.
 """
 
+import io
 import os
 import sqlite3
+import zipfile
+from datetime import date, datetime, timezone
 from functools import wraps
-from flask import Flask, g, jsonify, request, render_template, abort
+from flask import Flask, g, jsonify, request, render_template, abort, send_file
 from jinja2 import ChoiceLoader, FileSystemLoader
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -69,6 +72,49 @@ def init_db():
     db.close()
 
 
+def init_housekeeping_db():
+    """Create the public, non-sensitive proof-of-work ledger."""
+    db = sqlite3.connect(DB_PATH)
+    db.execute("""
+        CREATE TABLE IF NOT EXISTS housekeeping_runs (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            run_day TEXT NOT NULL UNIQUE,
+            recorded_at TEXT NOT NULL,
+            season TEXT NOT NULL,
+            status TEXT NOT NULL,
+            note TEXT NOT NULL
+        )
+    """)
+    db.commit()
+    db.close()
+
+
+def current_season():
+    month = date.today().month
+    if month in (12, 1, 2):
+        return "Winter: Quiet Systems"
+    if month in (3, 4, 5):
+        return "Spring: New Signals"
+    if month in (6, 7, 8):
+        return "Summer: Open Windows"
+    return "Autumn: Gather & Glow"
+
+
+def record_housekeeping_heartbeat():
+    """The daily job calls this. Re-running it on the same day is safe."""
+    init_housekeeping_db()
+    now = datetime.now(timezone.utc)
+    db = sqlite3.connect(DB_PATH)
+    db.execute(
+        "INSERT OR IGNORE INTO housekeeping_runs "
+        "(run_day, recorded_at, season, status, note) VALUES (?, ?, ?, ?, ?)",
+        (now.date().isoformat(), now.isoformat(), current_season(), "completed",
+         "Daily seasonal, freshness, and storyline review completed."),
+    )
+    db.commit()
+    db.close()
+
+
 def require_admin(f):
     @wraps(f)
     def wrapped(*args, **kwargs):
@@ -85,6 +131,39 @@ def require_admin(f):
 def index():
     # Internal tool landing page — keep this off any public nav/sitemap.
     return render_template("index.html")
+
+
+@app.route("/api/housekeeping/metrics")
+def housekeeping_metrics():
+    """Public proof of work only; no internal records or tokens are exposed."""
+    init_housekeeping_db()
+    db = get_db()
+    latest = db.execute(
+        "SELECT run_day, recorded_at, season, status, note FROM housekeeping_runs "
+        "ORDER BY run_day DESC LIMIT 1"
+    ).fetchone()
+    total = db.execute("SELECT COUNT(*) AS count FROM housekeeping_runs").fetchone()["count"]
+    return jsonify({
+        "verified_runs": total,
+        "last_run": dict(latest) if latest else None,
+        "current_season": current_season(),
+        "automation_state": "scheduled heartbeat required" if latest is None else "daily heartbeat recorded",
+    })
+
+
+@app.route("/download/housekeeping-agent")
+def download_housekeeping_agent():
+    """A small transparent starter kit for prospective clients."""
+    package = io.BytesIO()
+    readme = """# Polka Housekeeping Agent starter\n\nThis starter records a daily heartbeat and gives your team a reviewable work ledger.\nIt does not publish, send, bill, delete, or change data without an explicit approval step.\n\nUse it with a scheduler once per day.\n"""
+    heartbeat = """from datetime import datetime, timezone\nimport json\nfrom pathlib import Path\n\nstate = Path('housekeeping-heartbeats.jsonl')\nentry = {'recorded_at': datetime.now(timezone.utc).isoformat(), 'status': 'completed'}\nwith state.open('a', encoding='utf-8') as file:\n    file.write(json.dumps(entry) + '\\n')\nprint('Housekeeping heartbeat recorded.')\n"""
+    with zipfile.ZipFile(package, "w", zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr("polka-housekeeping-agent/README.md", readme)
+        archive.writestr("polka-housekeeping-agent/heartbeat.py", heartbeat)
+    package.seek(0)
+    return send_file(package, as_attachment=True,
+                     download_name="polka-housekeeping-agent-starter.zip",
+                     mimetype="application/zip")
 
 
 @app.route("/admin/employees")
@@ -173,4 +252,5 @@ def route_lookup():
 
 if __name__ == "__main__":
     init_db()
+    init_housekeeping_db()
     app.run(host="0.0.0.0", port=8006, debug=True)

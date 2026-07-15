@@ -1,0 +1,7 @@
+[Unit]
+Description=Polka Housekeeping Agent daily heartbeat
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/bball_1181/thepolka.cloud/directory-app
+ExecStart=/home/bball_1181/thepolka.cloud/.venv/bin/python3 housekeeping.py

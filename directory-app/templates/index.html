@@ -1,16 +1,63 @@
 {% extends "layout.html" %}
-{% block title %}Internal Directory{% endblock %}
+{% block title %}Navigate — The Polka Housekeeping Agent{% endblock %}
+{% block extra_css %}
+<style>
+  :root { --ink:#17141d; --cream:#fff8ed; --violet:#7d32af; --pink:#ff79cb; --gold:#ffc900; --blue:#58d9ff; }
+  .navigate { max-width:1200px; margin:0 auto; color:var(--ink); font-family:Inter,ui-sans-serif,system-ui,sans-serif; }
+  .navigate-hero { position:relative; overflow:hidden; min-height:440px; padding:clamp(2rem,5vw,4.8rem); border:2px solid var(--ink); border-radius:28px; background:linear-gradient(145deg,#f8c6f0 0%,#b28bff 46%,#65d9ff 100%); isolation:isolate; }
+  .navigate-hero:before { content:""; position:absolute; inset:0; z-index:-1; opacity:.78; background:radial-gradient(circle at 18% 20%,#fff 0 3%,transparent 3.4%),radial-gradient(circle at 84% 13%,#fff 0 2%,transparent 2.4%),linear-gradient(transparent 71%,#1c2754 72%); }
+  .eyebrow { margin:0 0 .7rem; font-size:.78rem; font-weight:900; letter-spacing:.13em; }
+  .navigate h1 { max-width:720px; margin:0; font-size:clamp(3.2rem,8vw,7rem); line-height:.88; letter-spacing:-.075em; }
+  .navigate h1 em { font-style:normal; color:#fff; text-shadow:3px 3px 0 var(--violet); }
+  .lede { max-width:590px; margin:1.35rem 0 0; font-size:clamp(1rem,1.7vw,1.25rem); line-height:1.5; }
+  .agent-live { display:inline-flex; align-items:center; gap:.6rem; margin-top:1.4rem; padding:.7rem .95rem; background:var(--cream); border:2px solid var(--ink); border-radius:999px; font-size:.85rem; font-weight:800; }
+  .pulse { width:.65rem; height:.65rem; border-radius:50%; background:#19b66c; box-shadow:0 0 0 0 rgba(25,182,108,.6); animation:pulse 1.8s infinite; }
+  .city { position:absolute; right:0; bottom:0; width:min(56%,630px); height:72%; pointer-events:none; }
+  .building { position:absolute; bottom:0; width:16%; border:2px solid var(--ink); border-bottom:0; background:#fff6a5; box-shadow:8px 0 0 rgba(23,20,29,.15); animation:cityBreathe 4s ease-in-out infinite; }
+  .building:after { content:""; display:block; height:100%; background:repeating-linear-gradient(90deg,transparent 0 23%,rgba(23,20,29,.72) 24% 34%,transparent 35% 58%); opacity:.62; }
+  .b1{height:47%;left:2%}.b2{height:75%;left:18%;background:#ffb4df;animation-delay:-1.4s}.b3{height:58%;left:35%;background:#90f4df;animation-delay:-.6s}.b4{height:88%;left:52%;background:#ffd95d;animation-delay:-2.1s}.b5{height:42%;left:69%;background:#e8c7ff;animation-delay:-.9s}.b6{height:63%;left:84%;background:#fff6a5;animation-delay:-1.8s}
+  .train { position:absolute; bottom:11%; left:-30%; width:38%; height:38px; border:2px solid var(--ink); border-radius:12px; background:var(--pink); animation:trainRide 10s linear infinite; }
+  .train:before { content:"N A V I G A T E"; display:block; padding:8px 12px; font-size:.65rem; font-weight:900; letter-spacing:.2em; }
+  .agent-grid { display:grid; grid-template-columns:1.25fr .75fr; gap:1rem; margin-top:1rem; }
+  .panel { border:2px solid var(--ink); border-radius:20px; padding:1.35rem; background:var(--cream); }
+  .panel h2 { margin:0 0 .25rem; font-size:1.25rem; }.panel p { margin:.45rem 0 0; line-height:1.45; }
+  .runs { display:grid; gap:.75rem; margin-top:1.1rem; }.run { display:grid; grid-template-columns:auto 1fr auto; gap:.75rem; align-items:center; padding:.75rem; border-radius:12px; background:#f0e6ff; }.run:nth-child(2){background:#e6fbf5}.run:nth-child(3){background:#fff0cb}.badge { display:grid; place-items:center; width:2rem;height:2rem; border:2px solid var(--ink); border-radius:50%; background:#fff; font-weight:900; }.run strong,.run small{display:block}.run small{margin-top:.15rem;color:#554f5a}.run time{font-size:.75rem;font-weight:800}
+  .season { min-height:100%; color:#fff; background:var(--ink); }.season h2{font-size:1.8rem;line-height:1}.season-card{margin-top:1rem;padding:1rem;border:1px solid rgba(255,255,255,.5);border-radius:14px}.season-card strong{font-size:1.1rem}.season-card p{color:#e8dff0}.action { width:100%; margin-top:1rem; padding:.9rem 1rem; border:2px solid var(--ink); border-radius:12px; background:var(--gold); color:var(--ink); font:800 .9rem inherit; cursor:pointer; }.action:hover{transform:translateY(-2px);box-shadow:4px 4px 0 var(--pink)}
+  .promise{margin-top:1rem;padding:1.25rem 1.35rem;border-left:7px solid var(--violet);background:#eee7ff}.promise strong{display:block;margin-bottom:.3rem}
+  .offers{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}.offer{position:relative;padding:1.35rem;border:2px solid var(--ink);border-radius:20px;background:#fff}.offer.featured{background:var(--gold);transform:translateY(-.35rem)}.offer .medal{font-size:1.5rem}.offer h2{margin:.55rem 0 .45rem;font-size:1.35rem}.offer p{line-height:1.45}.offer a{display:inline-block;margin-top:1rem;color:var(--ink);font-weight:900}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:1rem}.metric{padding:.9rem;border-radius:12px;background:#f4ecff}.metric strong{display:block;font-size:1.45rem}.metric small{display:block;margin-top:.25rem;color:#554f5a}@media(max-width:800px){.offers,.metrics{grid-template-columns:1fr}.offer.featured{transform:none}}
+  @keyframes pulse{70%{box-shadow:0 0 0 9px rgba(25,182,108,0)}} @keyframes cityBreathe{50%{transform:translateY(-7px)}} @keyframes trainRide{to{transform:translateX(370%)}}
+  @media(max-width:800px){.city{width:78%;opacity:.55}.agent-grid{grid-template-columns:1fr}.navigate-hero{min-height:490px}.navigate h1{font-size:clamp(3.1rem,15vw,5.5rem)}} @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+</style>
+{% endblock %}
 {% block content %}
-<div style="max-width: 640px; margin: 4rem auto; font-family: system-ui, sans-serif;">
-  <h1>Internal Directory Service</h1>
-  <p>This is an internal record-keeping tool. It is intentionally not linked
-     from any public page or sitemap. Access requires an admin token sent
-     via the <code>X-Admin-Token</code> header on API requests.</p>
-  <ul>
-    <li><code>GET /admin/employees</code> — list records</li>
-    <li><code>POST /admin/employees</code> — add a record</li>
-    <li><code>DELETE /admin/employees/&lt;id&gt;</code> — remove a record</li>
-    <li><code>GET /route?display_email=...&amp;anchor=...</code> — resolve routing target</li>
-  </ul>
-</div>
+<section class="navigate" id="filing">
+  <header class="navigate-hero">
+    <p class="eyebrow">NAVIGATE · A LIVING POLKA SYSTEM</p>
+    <h1>Meet the <em>Housekeeping</em> Agent.</h1>
+    <p class="lede">A continually evolving home for your business: it notices the season, prepares the next chapter, and keeps your public world clear, current, and unmistakably yours.</p>
+    <div class="agent-live"><span class="pulse"></span><span id="agent-status">Observing the rhythm of the house</span></div>
+    <div class="city" aria-hidden="true"><i class="building b1"></i><i class="building b2"></i><i class="building b3"></i><i class="building b4"></i><i class="building b5"></i><i class="building b6"></i><i class="train"></i></div>
+  </header>
+  <div class="agent-grid">
+    <section class="panel" aria-labelledby="today-title"><h2 id="today-title">Today’s house pulse</h2><p>The agent keeps a calm, visible ledger. It can suggest work; you decide what becomes real.</p><div class="runs" id="runs"><div class="run"><span class="badge">01</span><span><strong>Seasonal scan</strong><small>Checking the current site mood and upcoming moments.</small></span><time>READY</time></div><div class="run"><span class="badge">02</span><span><strong>Calendar watch</strong><small>Holiday and campaign ideas await your calendar connection.</small></span><time>STAGED</time></div><div class="run"><span class="badge">03</span><span><strong>Storyline refresh</strong><small>Keeping Navigate’s city in motion without repeating itself.</small></span><time>LIVE</time></div></div></section>
+    <aside class="panel season"><p class="eyebrow">CURRENT CHAPTER</p><h2 id="season-title">Summer: Open Windows</h2><div class="season-card"><strong>What the agent can tend</strong><p>Calendar moments · site themes · content freshness · public routing · a weekly review queue.</p></div><button class="action" id="pulse-button" type="button">Watch the agent notice something</button></aside>
+  </div>
+  <section class="offers" aria-label="Agent services">
+    <article class="offer"><span class="medal">🥇</span><h2>Security Agent</h2><p>Your flagship: daily security posture scans, reviewable reports, and clear proof of the work completed.</p><a href="https://agent.thepolka.cloud/">Explore Security →</a></article>
+    <article class="offer featured"><span class="medal">🥈</span><h2>Operations Bundle</h2><p>Security + Housekeeping together. One business rhythm: protected systems, fresh public presence, and a human-approved review queue.</p><a href="mailto:sales@thepolka.cloud?subject=Polka%20Operations%20Bundle">Request the bundle →</a></article>
+    <article class="offer"><span class="medal">🥉</span><h2>Housekeeping Agent</h2><p>Seasonal themes, calendar awareness, storyline care, and daily heartbeat evidence—available as a service or starter download.</p><a href="/download/housekeeping-agent">Download starter →</a></article>
+  </section>
+  <section class="panel" aria-labelledby="proof-title" style="margin-top:1rem"><h2 id="proof-title">Verified daily proof</h2><p id="proof-copy">Waiting for the first scheduled heartbeat. This page will never invent activity.</p><div class="metrics"><div class="metric"><strong id="run-count">—</strong><small>verified daily runs</small></div><div class="metric"><strong id="last-run">Not yet</strong><small>last recorded heartbeat</small></div><div class="metric"><strong id="agent-mode">Preparing</strong><small>agent status</small></div></div></section>
+  <aside class="promise"><strong>Human authorship stays in charge.</strong> The agent can observe, organize, propose, and animate. It will never publish, send, delete, bill, or change business data without your explicit approval.</aside>
+</section>
+{% endblock %}
+{% block extra_js %}
+<script>
+(() => {
+  const chapters=[['Summer: Open Windows','Noticed a bright moment: the city added a new route.'],['Autumn: Gather & Glow','Noticed a seasonal shift: warm themes are ready for review.'],['Winter: Quiet Systems','Noticed a quiet interval: your review queue is calm.'],['Spring: New Signals','Noticed a new beginning: a fresh storyline is growing.']];
+  const now=new Date(), season=Math.floor(((now.getMonth()%12)/3)); const [title,message]=chapters[season]; document.querySelector('#season-title').textContent=title;
+  document.querySelector('#pulse-button').addEventListener('click',()=>{document.querySelector('#agent-status').textContent=message; document.querySelector('#pulse-button').textContent='Noticed — added to your review queue';});
+  fetch('/api/housekeeping/metrics').then(response=>response.json()).then(metrics=>{document.querySelector('#run-count').textContent=metrics.verified_runs;document.querySelector('#agent-mode').textContent=metrics.automation_state==='daily heartbeat recorded'?'Active':'Needs schedule';if(metrics.last_run){document.querySelector('#last-run').textContent=metrics.last_run.run_day;document.querySelector('#proof-copy').textContent=metrics.last_run.note;}}).catch(()=>{document.querySelector('#proof-copy').textContent='Metrics will appear once the agent service is online.';});
+})();
+</script>
 {% endblock %}

@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Polka Housekeeping Agent every day
+
+[Timer]
+OnCalendar=*-*-* 08:15:00
+Persistent=true
+Unit=housekeeping-agent.service
+
+[Install]
+WantedBy=timers.target
