@@ -17,6 +17,12 @@
   let sidebar = shell.querySelector(".sidebar");
   if (!sidebar) { sidebar=document.createElement("aside"); sidebar.className="sidebar"; shell.prepend(sidebar); }
   sidebar.innerHTML=`<a class="global-brand" href="https://thepolka.cloud/#welcome">ThePolka.Cloud™</a><nav class="sidebar-nav" aria-label="Global navigation">${menu}</nav><div class="sidebar-bottom"><div class="language-ticker">Hello · Hola · مرحباً · 你好 · Bonjour</div><div class="sidebar-contact"><a href="mailto:info@thepolka.cloud">info@thepolka.cloud</a><a href="mailto:support@thepolka.cloud">support@thepolka.cloud</a><a href="mailto:sales@thepolka.cloud">sales@thepolka.cloud</a><a href="https://privacy.thepolka.cloud/#Shh">Privacy</a></div></div>`;
+  if (!document.querySelector("style[data-language-carousel]")) {
+    const carouselStyle=document.createElement("style"); carouselStyle.dataset.languageCarousel="true";
+    carouselStyle.textContent=".global-shell .hero-ticker{overflow:hidden;width:100%;height:48px}.global-shell .hero-ticker .ticker-track{display:flex;width:max-content;align-items:center;gap:1.25rem;animation:polkaGreetings 20s linear infinite}.global-shell .hero-ticker .ticker-item{white-space:nowrap;font-weight:700}.global-shell .hero-ticker:hover .ticker-track{animation-play-state:paused}@keyframes polkaGreetings{to{transform:translateX(-50%)}}";
+    document.head.append(carouselStyle);
+  }
+  sidebar.querySelector(".sidebar-nav").insertAdjacentHTML("beforebegin",`<div class="hero-ticker" aria-label="Greeting ticker"><div class="ticker-track"><span class="ticker-item">Hello</span><span class="ticker-item">Hol&aacute;</span><span class="ticker-item" lang="ar" dir="rtl">&#1605;&#1585;&#1581;&#1576;&#1575;&#1611;</span><span class="ticker-item" lang="zh">&#20320;&#22909;</span><span class="ticker-item">Bonjour</span><span class="ticker-item">Hello</span><span class="ticker-item">Hol&aacute;</span><span class="ticker-item" lang="ar" dir="rtl">&#1605;&#1585;&#1581;&#1576;&#1575;&#1611;</span><span class="ticker-item" lang="zh">&#20320;&#22909;</span><span class="ticker-item">Bonjour</span></div></div>`);
   let main=shell.querySelector(".main-column");
   if (!main) { main=document.createElement("div"); main.className="main-column"; [...shell.children].filter(node=>node!==sidebar).forEach(node=>main.append(node)); shell.append(main); }
   let footer=main.querySelector(".site-footer");
