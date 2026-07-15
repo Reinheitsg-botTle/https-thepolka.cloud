@@ -17,6 +17,7 @@
   let sidebar = shell.querySelector(".sidebar");
   if (!sidebar) { sidebar=document.createElement("aside"); sidebar.className="sidebar"; shell.prepend(sidebar); }
   sidebar.innerHTML=`<a class="global-brand" href="https://thepolka.cloud/#welcome">ThePolka.Cloud™</a><nav class="sidebar-nav" aria-label="Global navigation">${menu}</nav><div class="sidebar-bottom"><div class="language-ticker">Hello · Hola · مرحباً · 你好 · Bonjour</div><div class="sidebar-contact"><a href="mailto:info@thepolka.cloud">info@thepolka.cloud</a><a href="mailto:support@thepolka.cloud">support@thepolka.cloud</a><a href="mailto:sales@thepolka.cloud">sales@thepolka.cloud</a><a href="https://privacy.thepolka.cloud/#Shh">Privacy</a></div></div>`;
+  sidebar.querySelector(".language-ticker")?.remove();
   if (!document.querySelector("style[data-language-carousel]")) {
     const carouselStyle=document.createElement("style"); carouselStyle.dataset.languageCarousel="true";
     carouselStyle.textContent=".global-shell .hero-ticker{overflow:hidden;width:100%;height:48px}.global-shell .hero-ticker .ticker-track{display:flex;width:max-content;align-items:center;gap:1.25rem;animation:polkaGreetings 20s linear infinite}.global-shell .hero-ticker .ticker-item{white-space:nowrap;font-weight:700}.global-shell .hero-ticker:hover .ticker-track{animation-play-state:paused}@keyframes polkaGreetings{to{transform:translateX(-50%)}}";
