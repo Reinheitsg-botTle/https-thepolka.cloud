@@ -19,6 +19,9 @@ ingress:
   - hostname: cad.thepolka.cloud
     service: http://localhost:8004
 
+  - hostname: directory.thepolka.cloud
+    service: http://localhost:8005
+
   - hostname: faire.thepolka.cloud
     service: http://localhost:8003
 
