@@ -1,107 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- thepolka.cloud global template. -->
-  <!-- +++++++++++++++++++++++++++++++ -->
-  <title>{% block title %}The Polkadot Cloud Email Ecosystem{% endblock %}</title>
-  <!-- Display our favicon of our brand on the title tab of the webpage -->
-  <link rel="icon" type="image/png"
-      href="{{ url_for('static', filename='img/thepolka.cloud.png') }}">
-
-  <!-- Reference cascading style sheets -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Mail Ecosystem · ThePolka.Cloud{% endblock %}</title>
+  <link rel="icon" type="image/png" href="https://thepolka.cloud/static/img/thepolka.cloud.png">
+  <link rel="stylesheet" href="https://thepolka.cloud/static/css/global-shell.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   {% block extra_css %}{% endblock %}
-
-<!-- End heading of webpage -->
 </head>
-
-<!-- Here lies the meat and potatoes. We are in our global navigation toolbar and footer -->
-<!-- Constant contents. Pages get wrapped and baked into this layout template. -->
 <body>
 <div class="app-container">
-
-  <!-- GLOBAL LEFT NAV — permanent on every page -->
   <aside class="sidebar">
-    <div class="sidebar-brand">
-      <a href="https://thepolka.cloud#welcome">ThePolka.Cloud™</a>
-    </div>
-
-    <!-- Carousel ticker for langauges am fluent => beginner in -->
-    <div class="hero-ticker" aria-label="Greeting ticker">
-      <div class="ticker-track">
-        <span class="ticker-item" lang="en">Hello</span>
-        <span class="ticker-item" lang="es">Holá</span>
-        <span class="ticker-item" lang="ar" dir="rtl">مرحباً</span>
-        <span class="ticker-item" lang="zh">你好</span>
-        <span class="ticker-item" lang="fr">Bonjour</span>
-        <!-- duplicate the set once for a seamless loop -->
-        <span class="ticker-item" lang="en">Hello</span>
-        <span class="ticker-item" lang="es">Holá</span>
-        <span class="ticker-item" lang="ar" dir="rtl">مرحباً</span>
-        <span class="ticker-item" lang="zh">你好</span>
-        <span class="ticker-item" lang="fr">Bonjour</span>
-      </div>
-    </div>
-
-    <!-- Navigation menu for access to the various webpages -->
-    <nav class="sidebar-nav" aria-label="Global Navigation">
-      <a href="https://mail-ecosystem.thepolka.cloud/#mymail">Mail</a>
-         class="nav-link {% if active == 'home' %}active{% endif %}"
-      <a href="https://thepolka.cloud/#welcome">Home</a>
-         class="nav-link {% if active == 'home' %}active{% endif %}"
-      <a href="https://resume-generator.thepolka.cloud/#resume">Résumé Generator</a>
-         class="nav-link {% if active == 'resume' %}active{% endif %}"
-      <a href="https://faire.thepolka.cloud/#ai">FAIRE OS</a>
-         class="nav-link {% if active == 'FaireOS' %}active{% endif %}"
-      <a href="https://CAD.thepolka.cloud/#ack">CAD</a>
-         class="nav-link {% if active == 'CAD' %}active{% endif %}"
-      <a href="https://store.thepolka.cloud/#support">Boutique>
-         class="nav-link {% if active == 'store' %}active{% endif %}"
-
-
-    <!-- End of main-menu navigation links-->
+    <a class="sidebar-brand" href="https://thepolka.cloud/#welcome">ThePolka.Cloud™</a>
+    <div class="hero-ticker" aria-label="Greeting ticker"><div class="ticker-track"><span class="ticker-item">Hello</span><span class="ticker-item">Holá</span><span class="ticker-item" lang="ar" dir="rtl">مرحباً</span><span class="ticker-item" lang="zh">你好</span><span class="ticker-item">Bonjour</span><span class="ticker-item">Hello</span><span class="ticker-item">Holá</span><span class="ticker-item" lang="ar" dir="rtl">مرحباً</span><span class="ticker-item" lang="zh">你好</span><span class="ticker-item">Bonjour</span></div></div>
+    <nav class="sidebar-nav" aria-label="Global navigation">
+      <a class="nav-link" href="https://thepolka.cloud/#welcome">Home</a>
+      <a class="nav-link" href="https://resume-generator.thepolka.cloud/#resume">Résumé Generator</a>
+      <a class="nav-link" href="https://agent.thepolka.cloud/">Security Agent</a>
+      <a class="nav-link" href="https://faire.thepolka.cloud/#ai">Local OS FAIRE</a>
+      <a class="nav-link" href="https://cad.thepolka.cloud/#ack">CAD Experience</a>
+      <a class="nav-link" href="https://directory.thepolka.cloud/#filing">Navigate</a>
+      <a class="nav-link" href="https://store.thepolka.cloud/#support">Boutique</a>
+      <a class="nav-link active" aria-current="page" href="https://mail-ecosystem.thepolka.cloud/#mymail">Mail</a>
     </nav>
-
-    <div>
-      <img src="{{ url_for('static', filename='img/thepolka.cloud.png') }}">
-    </div>
   </aside>
-
-  <!-- MAIN CONTENT COLUMN -->
   <div class="main-column">
-    <main class="page-content">
-      {% block content %}{% endblock %}
-    </main>
-
-    <!-- GLOBAL FOOTER — permanent on every page $250,000.00 -->
-    <footer class="site-footer">
-
-      <!-- Offering main @ contacts to divide powers of company -->
-      <div class="footer-contact">
-        <a href="mailto:info@thepolka.cloud">info@thepolka.cloud</a>
-        <span class="sep">|</span>
-        <a href="mailto:support@thepolka.cloud">support@thepolka.cloud</a>
-        <span class="sep">|</span>
-        <a href="mailto:sales@thepolka.cloud">sales@thepolka.cloud</a>
-      </div>
-
-      <!-- Legal notice. "It's the law!" -->
-      <div class="footer-legal">
-        ThePolka.Cloud™ &mdash; Patent pending. Trademark applications filed and in process.
-        Copyright &copy;2019–2026. All rights reserved.
-      </div>
-
-    <!-- End footer section -->
-    </footer>
+    <main class="page-content">{% block content %}{% endblock %}</main>
+    <footer class="site-footer"><div class="footer-contact"><a href="mailto:info@thepolka.cloud">info@thepolka.cloud</a><a href="mailto:support@thepolka.cloud">support@thepolka.cloud</a><a href="mailto:sales@thepolka.cloud">sales@thepolka.cloud</a></div><div class="footer-legal">ThePolka.Cloud™ · Copyright © 2019–2026. All rights reserved.</div></footer>
   </div>
-
 </div>
-
-<!-- Read in JavaScript -->
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 <script src="https://thepolka.cloud/static/js/global-shell.js"></script>
 {% block extra_js %}{% endblock %}
 </body>

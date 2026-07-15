@@ -142,3 +142,13 @@ body {
 @media (max-width: 900px) {
   .me-grid { grid-template-columns: 1fr; }
 }
+
+/* Mail Ecosystem visual system */
+:root { --me-bg:#fbf7ef; --me-panel:#fffdf8; --me-border:#2b2634; --me-ink:#211d29; --me-accent:#6f2f9c; --me-accent-soft:#eee1f8; --me-ok:#087a4f; --me-error:#b22f44; --me-muted:#71697a; }
+.me-header { position:relative; overflow:hidden; margin-bottom:1.25rem; padding:clamp(1.5rem,4vw,3rem); border:2px solid var(--me-border); border-radius:22px; background:linear-gradient(130deg,#ffe279 0%,#ffb8e7 48%,#c6adff 100%); }
+.me-header:after { content:"MAIL / ROUTE / DELIVER"; position:absolute; right:-.4rem; bottom:.55rem; color:rgba(33,29,41,.16); font-size:clamp(1.4rem,5vw,4rem); font-weight:900; letter-spacing:-.08em; white-space:nowrap; }
+.me-header h1 { position:relative; z-index:1; font-size:clamp(2rem,5vw,4rem); letter-spacing:-.06em; }.me-header .subhead { position:relative; z-index:1; max-width:35rem; color:var(--me-ink); font-weight:650; }
+.me-grid { gap:1rem; padding:0; }.me-panel { border:2px solid var(--me-border); border-radius:18px; box-shadow:5px 5px 0 rgba(43,38,52,.12); }.me-panel h2 { margin-bottom:1rem; font-size:1.1rem; letter-spacing:-.025em; }
+.me-table th { color:var(--me-muted); font-size:.7rem; letter-spacing:.09em; text-transform:uppercase; }.me-table tr:hover td { background:#fff3d7; }.me-address-link { color:var(--me-accent); }.me-badge { background:#dff7e9; color:#087a4f; font-weight:800; }.me-view-btn,.me-mark-read { border:2px solid var(--me-border); border-radius:999px; font-weight:800; }.me-view-btn:hover { background:var(--me-accent-soft); }.me-mark-read { background:var(--me-accent); }
+.me-field select,.me-field input,.me-field textarea { border:2px solid #cfc2d8; border-radius:10px; }.me-field select:focus,.me-field input:focus,.me-field textarea:focus { outline:3px solid #ffd34d; border-color:var(--me-ink); }.me-cta { width:100%; border:2px solid var(--me-border); border-radius:10px; background:var(--me-accent); font-weight:850; box-shadow:3px 3px 0 var(--me-border); }.me-cta:hover { transform:translate(-1px,-1px); box-shadow:5px 5px 0 var(--me-border); }
+.me-message { border:2px solid #e1d6e7; }.me-message.me-unread { border-left-color:var(--me-accent); background:#fdf8ff; }.me-activity-row { padding:.6rem 0; }.me-activity-time { font-variant-numeric:tabular-nums; }
